@@ -43,7 +43,7 @@
                     bility="invisible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/mensaje"
+                    android:background="@drawable/mensajeizq"
                     android:padding="@dimen/_12sdp"
                     android:text="dfsasd"
                     android:textColor="@color/white"
