@@ -10,7 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.herprogramacion.pruebachatcardview.Mensaje;
 import com.herprogramacion.pruebachatcardview.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AdapterMensajes extends RecyclerView.Adapter<HolderMensaje> {
@@ -40,8 +45,12 @@ public void addMensaje(Mensaje m){
     @Override
     public void onBindViewHolder(HolderMensaje holder, int position) {
         if (listMensaje.get(position).getPosicion()==0){
+            holder.getMsg().setVisibility(View.VISIBLE);
+            holder.getTiempoDrch().setText(listMensaje.get(position).getTiempo());
             holder.getMensaje().setText(listMensaje.get(position).getMensaje());
         }else if(listMensaje.get(position).getPosicion()==1){
+            holder.getMsgIzq().setVisibility(View.VISIBLE);
+            holder.getTiempoIzq().setText(listMensaje.get(position).getTiempoIzq());
             holder.getMensajeizq().setText(listMensaje.get(position).getMensaje());
 
         }

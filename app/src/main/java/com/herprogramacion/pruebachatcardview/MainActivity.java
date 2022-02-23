@@ -40,6 +40,12 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketOption;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,15 +59,14 @@ public class MainActivity extends AppCompatActivity {
     private PrintWriter output;
     private BufferedReader input;
     String msg;
+    int cont = 0;
     String id;
-
+    private DateFormat dateFormat;
 
     private AdapterMensajes adapter;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-
-
 
 
     @SuppressLint("HardwareIds")
@@ -75,15 +80,28 @@ public class MainActivity extends AppCompatActivity {
         id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         try {
             declararObjetos();
-
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
         btnEnviar.setOnClickListener(view -> {
-            System.out.println(strUsuario);
+//            Map<String, Object> mensaje = new HashMap<>();
 
-//           adapter.addMensaje(new Mensaje(txtMensaje.getText().toString(), 0));
-            databaseReference.push().setValue(new Mensaje(strUsuario,txtMensaje.getText().toString(), 0, id));
+//            mensaje.put("Usuario", strUsuario);
+//            mensaje.put("Mensaje", txtMensaje.getText().toString());
+//            mensaje.put("posicion", 0);
+//            mensaje.put("id", id);
+//            mensaje.put("hora", dateFormat.format(date));
+//            mensaje.put("msgLeidDrch", false);
+//            mensaje.put("msgLeidIzq", false);
+//
+//
+//            databaseReference.child(String.valueOf(cont)).updateChildren(mensaje);
+            Date date = new Date();
+
+            // adapter.addMensaje(new Mensaje(txtMensaje.getText().toString(), 0));
+            System.out.println(adapter.getItemCount());
+            databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(new Mensaje(strUsuario, txtMensaje.getText().toString(), 0, id, dateFormat.format(date)));
+            //databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(new Receptor(false));
             //databaseReference.push().setValue(new Receptor(strUsuario+": "+txtMensaje.getText().toString(), 1,id));
 //            databaseReference.push().setValue(new Receptor(strUsuario+":"+txtMensaje));
             txtMensaje.setText("");
@@ -101,16 +119,30 @@ public class MainActivity extends AppCompatActivity {
 
 
         databaseReference.addChildEventListener(new ChildEventListener() {
+
+
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, String previousChildName) {
-                Mensaje m = snapshot.getValue(Mensaje.class);
-                assert m != null;
-                if (m.getEmisor().equals(id)){
 
+                Mensaje m = snapshot.getValue(Mensaje.class);
+//                Receptor r = snapshot.getValue(Receptor.class);
+                assert m != null;
+//                assert r != null;
+                databaseReference.child(String.valueOf(adapter.getItemCount())).child("mensajeLeidoDrch").removeValue();
+                databaseReference.child(String.valueOf(adapter.getItemCount())).child("mensajeLeidoIzq").removeValue();
+                m.setMensajeLeidoDrch(false);
+                m.setMensajeLeidoIzq(false);
+                if (m.getEmisor().equals(id) && !m.isMensajeLeidoDrch()) {
+                    databaseReference.child(String.valueOf(adapter.getItemCount())).child("mensajeLeidoDrch").setValue(true);
+                    databaseReference.child(String.valueOf(adapter.getItemCount())).child("mensajeLeidoIzq").setValue(true);
                     adapter.addMensaje(m);
-                }else if(!m.getEmisor().equals(id)){
-                m.setMensaje(m.getUsuario()+": "+m.getMensaje());
+                } else if (!m.getEmisor().equals(id) && !m.isMensajeLeidoIzq()) {
+                    m.setMensaje(m.getUsuario() + ": " + m.getMensaje());
+                    databaseReference.child(String.valueOf(adapter.getItemCount())).child("mensajeLeidoDrch").setValue(true);
+                    databaseReference.child(String.valueOf(adapter.getItemCount())).child("mensajeLeidoIzq").setValue(true);
                     m.setPosicion(1);
+                    Date date = new Date();
+                    m.setTiempoIzq(dateFormat.format(date));
                     adapter.addMensaje(m);
                 }
 
@@ -119,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
-
             }
 
             @Override
@@ -134,9 +165,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+
+
     }
 
     private void mostrarAlertDialog() {
@@ -155,12 +187,14 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void declararObjetos() {
         txtMensaje = (EditText) findViewById(R.id.txtMensaje);
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
         rvMensajes = (RecyclerView) findViewById(R.id.rvMensajes);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("chat");
+        dateFormat = new SimpleDateFormat("HH:mm");
         adapter = new AdapterMensajes(this);
         LinearLayoutManager l = new LinearLayoutManager(this);
         rvMensajes.setLayoutManager(l);

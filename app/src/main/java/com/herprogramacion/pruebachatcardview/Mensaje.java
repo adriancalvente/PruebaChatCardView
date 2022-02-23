@@ -1,11 +1,20 @@
 package com.herprogramacion.pruebachatcardview;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class Mensaje {
     private String mensaje;
     private String mensajeizq;
     private int posicion;
     private String emisor;
     private String usuario;
+    private String tiempo;
+private String tiempoIzq;
+private boolean mensajeLeidoDrch;
+private boolean mensajeLeidoIzq;
     public String getEmisor() {
         return emisor;
     }
@@ -26,11 +35,45 @@ public class Mensaje {
         this.posicion = posicion;
     }
 
-    public Mensaje(String usuario,String mensaje, int posicion, String emisor) {
+    public Mensaje(String usuario,String mensaje, int posicion, String emisor,String tiempo) {
         this.mensaje = mensaje;
         this.posicion = posicion;
         this.emisor=emisor;
         this.usuario = usuario;
+        this.tiempo=tiempo;
+    }
+
+
+    public String getTiempo() {
+        return tiempo;
+    }
+
+    public void setTiempo(String tiempo) {
+        this.tiempo = tiempo;
+    }
+
+    public String getTiempoIzq() {
+        return tiempoIzq;
+    }
+
+    public void setTiempoIzq(String tiempoIzq) {
+        this.tiempoIzq = tiempoIzq;
+    }
+
+    public boolean isMensajeLeidoDrch() {
+        return mensajeLeidoDrch;
+    }
+
+    public void setMensajeLeidoDrch(boolean mensajeLeidoDrch) {
+        this.mensajeLeidoDrch = mensajeLeidoDrch;
+    }
+
+    public boolean isMensajeLeidoIzq() {
+        return mensajeLeidoIzq;
+    }
+
+    public void setMensajeLeidoIzq(boolean mensajeLeidoIzq) {
+        this.mensajeLeidoIzq = mensajeLeidoIzq;
     }
 
     public String getMensajeizq() {

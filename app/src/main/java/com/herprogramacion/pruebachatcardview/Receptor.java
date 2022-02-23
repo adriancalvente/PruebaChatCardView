@@ -1,29 +1,26 @@
 package com.herprogramacion.pruebachatcardview;
 
 public class Receptor {
-    private String mensaje;
-    private int posicion;
-    private String emisor;
+    private String id;
+    private boolean leido;
 
-
-    public Receptor() {
+    public Receptor(boolean leido) {
+        this.leido = leido;
     }
 
-    public Receptor(String mensaje) {
-        this.mensaje = mensaje;
+    public String getId() {
+        return id;
     }
 
-    public String getMensaje() {
-        return mensaje;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Receptor(String mensaje, int posicion, String emisor) {
-        this.mensaje = mensaje;
-        this.posicion = posicion;
-        this.emisor = emisor;
+    public boolean isLeido() {
+        return leido;
     }
 
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+    public void setLeido(boolean leido) {
+        this.leido = leido;
     }
 }
