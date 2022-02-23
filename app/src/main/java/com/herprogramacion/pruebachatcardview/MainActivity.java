@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Gravity;
@@ -70,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mostrarAlertDialog();
+        Intent intent = getIntent();
+        strUsuario = intent.getStringExtra("usuario");
 
         id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         try {
@@ -139,21 +141,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void mostrarAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final View customLayout = getLayoutInflater().inflate(R.layout.custom_layout, null);
-        builder.setView(customLayout);
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            EditText editText = customLayout.findViewById(R.id.editText);
-            EditText editText1 = customLayout.findViewById(R.id.servidor);
-            strServidor = editText1.getText().toString();
-            strUsuario = editText.getText().toString();
-
-
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 
     private void declararObjetos() {
         txtMensaje = (EditText) findViewById(R.id.txtMensaje);
