@@ -3,6 +3,7 @@ package com.herprogramacion.pruebachatcardview;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
-    private String strUsuario;
+    public static String strUsuario;
     private TabLayout tabLayout;
     private TabItem chat, video, audio;
     private ViewPager2 viewPager;
@@ -35,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
         declararObjetos();
         Intent intent = getIntent();
         strUsuario = intent.getStringExtra("usuario");
-        fragmentChat = Chat.newInstance(strUsuario, "");
-        fragmentVideo = Video.newInstance(strUsuario, "");
     }
 
     private void declararObjetos() {

@@ -4,15 +4,10 @@ public class Mensaje {
     private String mensaje;
     private String mensajeizq;
     private int posicion;
-    private String emisor;
+    private String id;
     private String usuario;
-    public String getEmisor() {
-        return emisor;
-    }
-
-    public void setEmisor(String emisor) {
-        this.emisor = emisor;
-    }
+    private String tiempo;
+    private String tiempoIzq;
 
     public Mensaje() {
     }
@@ -26,11 +21,36 @@ public class Mensaje {
         this.posicion = posicion;
     }
 
-    public Mensaje(String usuario,String mensaje, int posicion, String emisor) {
+    public Mensaje(String usuario, String mensaje, int posicion, String id, String tiempo) {
         this.mensaje = mensaje;
         this.posicion = posicion;
-        this.emisor=emisor;
+        this.id = id;
         this.usuario = usuario;
+        this.tiempo = tiempo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTiempo() {
+        return tiempo;
+    }
+
+    public void setTiempo(String tiempo) {
+        this.tiempo = tiempo;
+    }
+
+    public String getTiempoIzq() {
+        return tiempoIzq;
+    }
+
+    public void setTiempoIzq(String tiempoIzq) {
+        this.tiempoIzq = tiempoIzq;
     }
 
     public String getMensajeizq() {

@@ -3,6 +3,7 @@ package com.herprogramacion.pruebachatcardview;
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +40,7 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
                     //Iniciar main Activity (enviar usuario)
                     Intent intent = new Intent(this, MainActivity.class);
                     intent.putExtra("usuario", usuarioRegistrado.getNombreUsuario());
+                    Log.i("debug", usuarioRegistrado.getNombreUsuario());
                     startActivity(intent);
                 } else {
                     Toast.makeText(this, "Usuario o Contraseña incorrectos",

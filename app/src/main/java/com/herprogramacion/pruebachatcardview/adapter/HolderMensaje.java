@@ -5,17 +5,58 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.herprogramacion.pruebachatcardview.R;
 
 public class HolderMensaje extends RecyclerView.ViewHolder {
+    private ConstraintLayout msg;
+    private ConstraintLayout msgIzq;
     private TextView mensaje;
     private TextView mensajeizq;
+    private TextView tiempoDrch;
+    private TextView tiempoIzq;
     public HolderMensaje(View itemView) {
         super(itemView);
         mensaje = (TextView) itemView.findViewById(R.id.mensaje);
         mensajeizq=(TextView) itemView.findViewById(R.id.mensajeizq);
+        msg = (ConstraintLayout) itemView.findViewById(R.id.msgDrch);
+        msgIzq = (ConstraintLayout) itemView.findViewById(R.id.msgIzq);
+        tiempoDrch = (TextView) itemView.findViewById(R.id.tiempoDrch);
+        tiempoIzq = (TextView) itemView.findViewById(R.id.tiempoIzq);
+    }
+
+    public ConstraintLayout getMsg() {
+        return msg;
+    }
+
+    public void setMsg(ConstraintLayout msg) {
+        this.msg = msg;
+    }
+
+    public ConstraintLayout getMsgIzq() {
+        return msgIzq;
+    }
+
+    public void setMsgIzq(ConstraintLayout msgIzq) {
+        this.msgIzq = msgIzq;
+    }
+
+    public TextView getTiempoDrch() {
+        return tiempoDrch;
+    }
+
+    public void setTiempoDrch(TextView tiempoDrch) {
+        this.tiempoDrch = tiempoDrch;
+    }
+
+    public TextView getTiempoIzq() {
+        return tiempoIzq;
+    }
+
+    public void setTiempoIzq(TextView tiempoIzq) {
+        this.tiempoIzq = tiempoIzq;
     }
 
     public TextView getMensaje() {

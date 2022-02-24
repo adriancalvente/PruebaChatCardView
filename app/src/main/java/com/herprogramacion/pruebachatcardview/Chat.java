@@ -25,6 +25,9 @@ import com.herprogramacion.pruebachatcardview.adapter.AdapterMensajes;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +42,6 @@ public class Chat extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     RecyclerView rvMensajes;
     //    private Socket cliente;
-    String strServidor, strUsuario;
     String msg;
     String id;
     // TODO: Rename and change types of parameters
@@ -52,6 +54,7 @@ public class Chat extends Fragment {
     private PrintWriter output;
     private BufferedReader input;
     private AdapterMensajes adapter;
+    private DateFormat dateFormat;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -100,10 +103,11 @@ public class Chat extends Fragment {
             System.out.println(e.getLocalizedMessage());
         }
         btnEnviar.setOnClickListener(view -> {
-            System.out.println(strUsuario);
-
+            System.out.println(MainActivity.strUsuario);
+            Date date = new Date();
 //           adapter.addMensaje(new Mensaje(txtMensaje.getText().toString(), 0));
-            databaseReference.push().setValue(new Mensaje(strUsuario, txtMensaje.getText().toString(), 0, id));
+            databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(new Mensaje(MainActivity.strUsuario, txtMensaje.getText().toString(), 0, id, dateFormat.format(date)));
+//            databaseReference.push().setValue(new Mensaje(strUsuario, txtMensaje.getText().toString(), 0, id,dateFormat.format(date)));
             //databaseReference.push().setValue(new Receptor(strUsuario+": "+txtMensaje.getText().toString(), 1,id));
 //            databaseReference.push().setValue(new Receptor(strUsuario+":"+txtMensaje));
             txtMensaje.setText("");
@@ -125,10 +129,9 @@ public class Chat extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, String previousChildName) {
                 Mensaje m = snapshot.getValue(Mensaje.class);
                 assert m != null;
-                if (m.getEmisor().equals(id)) {
-
+                if (m.getId().equals(id)) {
                     adapter.addMensaje(m);
-                } else if (!m.getEmisor().equals(id)) {
+                } else if (!m.getId().equals(id)) {
                     m.setMensaje(m.getUsuario() + ": " + m.getMensaje());
                     m.setPosicion(1);
                     adapter.addMensaje(m);
@@ -161,12 +164,14 @@ public class Chat extends Fragment {
         return inflate;
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void declararObjetos() {
         txtMensaje = (EditText) inflate.findViewById(R.id.txtMensaje);
         btnEnviar = (Button) inflate.findViewById(R.id.btnEnviar);
         rvMensajes = (RecyclerView) inflate.findViewById(R.id.rvMensajes);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("chat");
+        dateFormat = new SimpleDateFormat("HH:mm");
         adapter = new AdapterMensajes(getContext());
         LinearLayoutManager l = new LinearLayoutManager(getContext());
         rvMensajes.setLayoutManager(l);
