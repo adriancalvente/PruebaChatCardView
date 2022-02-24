@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rvMensajes;
     //    private Socket cliente;
-    String strServidor, strUsuario;
+    public static String strServidor, strUsuario;
     private ServerSocket server;
     private PrintWriter output;
     private BufferedReader input;

@@ -1,10 +1,5 @@
 package com.herprogramacion.pruebachatcardview;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class Mensaje {
     private String mensaje;
     private String mensajeizq;
@@ -12,16 +7,9 @@ public class Mensaje {
     private String emisor;
     private String usuario;
     private String tiempo;
-private String tiempoIzq;
-private boolean mensajeLeidoDrch;
-private boolean mensajeLeidoIzq;
-    public String getEmisor() {
-        return emisor;
-    }
-
-    public void setEmisor(String emisor) {
-        this.emisor = emisor;
-    }
+    private String tiempoIzq;
+    private boolean mensajeLeidoDrch;
+    private boolean mensajeLeidoIzq;
 
     public Mensaje() {
     }
@@ -35,14 +23,21 @@ private boolean mensajeLeidoIzq;
         this.posicion = posicion;
     }
 
-    public Mensaje(String usuario,String mensaje, int posicion, String emisor,String tiempo) {
+    public Mensaje(String usuario, String mensaje, int posicion, String emisor, String tiempo) {
         this.mensaje = mensaje;
         this.posicion = posicion;
-        this.emisor=emisor;
+        this.emisor = emisor;
         this.usuario = usuario;
-        this.tiempo=tiempo;
+        this.tiempo = tiempo;
     }
 
+    public String getEmisor() {
+        return emisor;
+    }
+
+    public void setEmisor(String emisor) {
+        this.emisor = emisor;
+    }
 
     public String getTiempo() {
         return tiempo;
