@@ -41,8 +41,6 @@ public class Chat extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     RecyclerView rvMensajes;
-    //    private Socket cliente;
-    String msg;
     String id;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -50,12 +48,8 @@ public class Chat extends Fragment {
     private View inflate;
     private EditText txtMensaje;
     private Button btnEnviar;
-    private ServerSocket server;
-    private PrintWriter output;
-    private BufferedReader input;
     private AdapterMensajes adapter;
     private DateFormat dateFormat;
-
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
@@ -105,11 +99,8 @@ public class Chat extends Fragment {
         btnEnviar.setOnClickListener(view -> {
             System.out.println(MainActivity.strUsuario);
             Date date = new Date();
-//           adapter.addMensaje(new Mensaje(txtMensaje.getText().toString(), 0));
             databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(new Mensaje(MainActivity.strUsuario, txtMensaje.getText().toString(), 0, id, dateFormat.format(date)));
-//            databaseReference.push().setValue(new Mensaje(strUsuario, txtMensaje.getText().toString(), 0, id,dateFormat.format(date)));
-            //databaseReference.push().setValue(new Receptor(strUsuario+": "+txtMensaje.getText().toString(), 1,id));
-//            databaseReference.push().setValue(new Receptor(strUsuario+":"+txtMensaje));
+
             txtMensaje.setText("");
 
         });
