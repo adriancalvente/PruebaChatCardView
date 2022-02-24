@@ -25,7 +25,7 @@ public class PagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return Chat.newInstance("josele","");
+                return new Chat();
             case 1:
                 return new Video();
             case 2:
