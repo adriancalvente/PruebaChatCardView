@@ -1,9 +1,11 @@
-package com.herprogramacion.pruebachatcardview;
+package com.herprogramacion.pruebachatcardview.threads;
 
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
+import com.herprogramacion.pruebachatcardview.R;
 
 public class MediaThread extends Thread {
     private VideoView videoView;
@@ -25,16 +27,16 @@ public class MediaThread extends Thread {
 
     @Override
     public void run() {
-            if (videoView == null) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
-                } else {
-                    mediaPlayer.start();
-                }
+        if (videoView == null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
             } else {
-                videoView.setOnPreparedListener(mediaPlayer1 -> videoView.start());
+                mediaPlayer.start();
             }
+        } else {
+            videoView.setOnPreparedListener(mediaPlayer1 -> videoView.start());
         }
+    }
 
 
 }

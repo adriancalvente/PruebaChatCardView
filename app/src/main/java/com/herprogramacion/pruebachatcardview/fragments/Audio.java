@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import com.herprogramacion.pruebachatcardview.MediaThread;
+import com.herprogramacion.pruebachatcardview.threads.MediaThread;
 import com.herprogramacion.pruebachatcardview.R;
 
 /**
