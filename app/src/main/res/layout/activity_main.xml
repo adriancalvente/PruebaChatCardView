@@ -16,28 +16,21 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:onClick="onClick">
+        android:layout_weight="0">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabChat"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Conversación" />
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabVideo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Video" />
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabAudio"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Sonido" />
+            android:layout_height="wrap_content" />
     </com.google.android.material.tabs.TabLayout>
 </LinearLayout>

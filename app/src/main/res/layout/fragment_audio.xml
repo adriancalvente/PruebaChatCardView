@@ -10,8 +10,8 @@
 
     <Button
         android:id="@+id/btnPlay"
-        android:layout_width="100dp"
-        android:text="play"
+        android:layout_width="150dp"
+        android:text="@string/reproducir"
         android:layout_height="50dp" />
 
 </LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PruebaChatCardView</string>
+    <string name="nombre_de_usuario">Username</string>
+    <string name="introduce_contrasena">Insert password</string>
+    <string name="registrar">Sing in</string>
+    <string name="reproducir">Play</string>
+    <string name="enviar">Send</string>
+    <string name="iniciar_sesion">Log in</string>
+</resources>

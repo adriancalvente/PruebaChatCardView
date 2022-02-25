@@ -1,11 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PruebaChatCardView</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nombre_de_usuario">Nombre de Usuario</string>
+    <string name="iniciar_sesion">INICIAR SESION</string>
     <string name="introduce_contrasena">Introduce contraseña</string>
     <string name="registrar">Registrar</string>
-    <string name="reproducir">reproducir</string>
+    <string name="reproducir">Reproducir</string>
     <string name="enviar">Enviar</string>
-    <string name="iniciar_sesion">INICIAR SESION</string>
 </resources>
