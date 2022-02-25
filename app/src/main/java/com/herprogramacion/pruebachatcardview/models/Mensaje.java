@@ -28,15 +28,6 @@ public class Mensaje {
     @ColumnInfo
     private String tiempoDeEnvio;
 
-    @NonNull
-    public String getTiempoDeEnvio() {
-        return tiempoDeEnvio;
-    }
-
-    public void setTiempoDeEnvio(@NonNull String tiempoDeEnvio) {
-        this.tiempoDeEnvio = tiempoDeEnvio;
-    }
-
     public Mensaje() {
     }
 
@@ -56,6 +47,15 @@ public class Mensaje {
         this.usuario = usuario;
         this.tiempo = tiempo;
         this.tiempoDeEnvio = String.valueOf(LocalTime.now());
+    }
+
+    @NonNull
+    public String getTiempoDeEnvio() {
+        return tiempoDeEnvio;
+    }
+
+    public void setTiempoDeEnvio(@NonNull String tiempoDeEnvio) {
+        this.tiempoDeEnvio = tiempoDeEnvio;
     }
 
     public String getId() {

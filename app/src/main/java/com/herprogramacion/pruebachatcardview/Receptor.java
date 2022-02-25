@@ -13,14 +13,14 @@ public class Receptor {
         this.mensaje = mensaje;
     }
 
-    public String getMensaje() {
-        return mensaje;
-    }
-
     public Receptor(String mensaje, int posicion, String emisor) {
         this.mensaje = mensaje;
         this.posicion = posicion;
         this.emisor = emisor;
+    }
+
+    public String getMensaje() {
+        return mensaje;
     }
 
     public void setMensaje(String mensaje) {

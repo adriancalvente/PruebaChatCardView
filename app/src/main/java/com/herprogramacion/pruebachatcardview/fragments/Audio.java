@@ -1,6 +1,7 @@
 package com.herprogramacion.pruebachatcardview.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,8 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import com.herprogramacion.pruebachatcardview.threads.MediaThread;
 import com.herprogramacion.pruebachatcardview.R;
+import com.herprogramacion.pruebachatcardview.threads.MediaThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,10 +63,16 @@ public class Audio extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_audio, container, false);
-        btnPLay = inflate.findViewById(R.id.btnPlay);
-        MediaThread mediaThread = new MediaThread(getContext(), R.raw.video);
-        btnPLay.setOnClickListener(view -> mediaThread.start());
-        return inflate;
+        try {
+            View inflate = inflater.inflate(R.layout.fragment_audio, container, false);
+            btnPLay = inflate.findViewById(R.id.btnPlay);
+            MediaThread mediaThread = new MediaThread(getContext(), R.raw.video);
+            btnPLay.setOnClickListener(view -> mediaThread.start());
+            return inflate;
+
+        } catch (Exception e) {
+            Log.e("unexpected", "Unexpected error");
+            return null;
+        }
     }
 }

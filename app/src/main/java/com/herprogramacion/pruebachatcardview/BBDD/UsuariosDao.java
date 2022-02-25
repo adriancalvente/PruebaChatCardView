@@ -17,7 +17,7 @@ public interface UsuariosDao {
     List<Usuarios> getAll();
 
     @Query("SELECT * FROM usuarios WHERE nombreUsuario=:nombreUsuario AND contrasena=:contrasena LIMIT 1")
-    Usuarios findById(String nombreUsuario,String contrasena);
+    Usuarios findById(String nombreUsuario, String contrasena);
 
     @Query("SELECT * FROM usuarios WHERE contrasena LIKE :contrasena LIMIT 1")
     Usuarios findByName(String contrasena);

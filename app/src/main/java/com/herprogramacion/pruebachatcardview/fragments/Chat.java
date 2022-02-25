@@ -3,6 +3,7 @@ package com.herprogramacion.pruebachatcardview.fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,89 +90,98 @@ public class Chat extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        inflate = inflater.inflate(R.layout.fragment_chat, container, false);
-        // Inflate the layout for this fragment
-        id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         try {
-            declararObjetos();
 
-        } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
-        }
-        AppDataBase db = Room.databaseBuilder(inflater.getContext(), AppDataBase.class,
-                "database-name").allowMainThreadQueries().build();
-        btnEnviar.setOnClickListener(view -> {
-            System.out.println(MainActivity.strUsuario);
-            Date date = new Date();
-            Mensaje mensaje = new Mensaje(MainActivity.strUsuario, txtMensaje.getText().toString(), 0, id, dateFormat.format(date));
-            db.mensajesDao().insert(mensaje);
-            databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(mensaje);
-            txtMensaje.setText("");
+            inflate = inflater.inflate(R.layout.fragment_chat, container, false);
+            // Inflate the layout for this fragment
+            id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+            try {
+                declararObjetos();
 
-        });
-
-
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                setScrollbar();
+            } catch (Exception e) {
+                System.out.println(e.getLocalizedMessage());
             }
-        });
+            AppDataBase db = Room.databaseBuilder(inflater.getContext(), AppDataBase.class,
+                    "database-name").allowMainThreadQueries().build();
+            btnEnviar.setOnClickListener(view -> {
+                System.out.println(MainActivity.strUsuario);
+                Date date = new Date();
+                Mensaje mensaje = new Mensaje(MainActivity.strUsuario, txtMensaje.getText().toString(), 0, id, dateFormat.format(date));
+                db.mensajesDao().insert(mensaje);
+                databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(mensaje);
+                txtMensaje.setText("");
+
+            });
 
 
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, String previousChildName) {
-                Mensaje m = snapshot.getValue(Mensaje.class);
-                assert m != null;
-                if (m.getId().equals(id)) {
-                    adapter.addMensaje(m);
-                } else if (!m.getId().equals(id)) {
-                    m.setMensaje(m.getUsuario() + ": " + m.getMensaje());
-                    m.setPosicion(1);
-                    adapter.addMensaje(m);
+            adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    setScrollbar();
+                }
+            });
+
+
+            databaseReference.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, String previousChildName) {
+                    Mensaje m = snapshot.getValue(Mensaje.class);
+                    assert m != null;
+                    if (m.getId().equals(id)) {
+                        adapter.addMensaje(m);
+                    } else if (!m.getId().equals(id)) {
+                        m.setMensaje(m.getUsuario() + ": " + m.getMensaje());
+                        m.setPosicion(1);
+                        adapter.addMensaje(m);
+                    }
+
+
                 }
 
+                @Override
+                public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
 
-            }
+                }
 
-            @Override
-            public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
+                @Override
+                public void onChildRemoved(DataSnapshot snapshot) {
 
-            }
+                }
 
-            @Override
-            public void onChildRemoved(DataSnapshot snapshot) {
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-            }
+                }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            Log.e("unexpected", "Unexpected error");
+        }
 
         return inflate;
     }
 
     @SuppressLint("SimpleDateFormat")
     private void declararObjetos() {
-        txtMensaje = (EditText) inflate.findViewById(R.id.txtMensaje);
-        btnEnviar = (Button) inflate.findViewById(R.id.btnEnviar);
-        rvMensajes = (RecyclerView) inflate.findViewById(R.id.rvMensajes);
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("chat");
-        dateFormat = new SimpleDateFormat("HH:mm");
-        adapter = new AdapterMensajes(getContext());
-        LinearLayoutManager l = new LinearLayoutManager(getContext());
-        rvMensajes.setLayoutManager(l);
-        rvMensajes.setAdapter(adapter);
+        try {
+            txtMensaje = inflate.findViewById(R.id.txtMensaje);
+            btnEnviar = inflate.findViewById(R.id.btnEnviar);
+            rvMensajes = inflate.findViewById(R.id.rvMensajes);
+            database = FirebaseDatabase.getInstance();
+            databaseReference = database.getReference("chat");
+            dateFormat = new SimpleDateFormat("HH:mm");
+            adapter = new AdapterMensajes(getContext());
+            LinearLayoutManager l = new LinearLayoutManager(getContext());
+            rvMensajes.setLayoutManager(l);
+            rvMensajes.setAdapter(adapter);
+        } catch (Exception e) {
+            Log.e("unexpected", "Unexpected error");
+        }
     }
 
     private void setScrollbar() {

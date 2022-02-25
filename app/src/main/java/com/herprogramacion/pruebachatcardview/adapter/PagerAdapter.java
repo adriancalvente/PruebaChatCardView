@@ -1,5 +1,7 @@
 package com.herprogramacion.pruebachatcardview.adapter;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,7 +14,7 @@ import com.herprogramacion.pruebachatcardview.fragments.Video;
 
 public class PagerAdapter extends FragmentStateAdapter {
 
-    private int numeroDePestaña;
+    private final int numeroDePestaña;
 
     public PagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, int numeroDePestaña) {
         super(fragmentManager, lifecycle);
@@ -27,15 +29,21 @@ public class PagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                return new Chat();
-            case 1:
-                return new Video();
-            case 2:
-                return new Audio();
-            default:
-                return null;
+        try {
+
+            switch (position) {
+                case 0:
+                    return new Chat();
+                case 1:
+                    return new Video();
+                case 2:
+                    return new Audio();
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+            Log.e("unexpected", "Unexpected error");
+            return null;
         }
     }
 
