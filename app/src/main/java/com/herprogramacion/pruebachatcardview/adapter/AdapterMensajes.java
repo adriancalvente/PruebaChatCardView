@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.herprogramacion.pruebachatcardview.MainActivity;
-import com.herprogramacion.pruebachatcardview.Mensaje;
+import com.herprogramacion.pruebachatcardview.activity.MainActivity;
 import com.herprogramacion.pruebachatcardview.R;
 
 import java.util.ArrayList;
