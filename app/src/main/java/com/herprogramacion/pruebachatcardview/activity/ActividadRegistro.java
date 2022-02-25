@@ -2,7 +2,6 @@ package com.herprogramacion.pruebachatcardview.activity;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,7 +44,7 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
                 if (usuarioRegistrado != null) {
                     //Iniciar main Activity (enviar usuario)
                     pb.setVisibility(View.VISIBLE);
-                    new EsperaAPP().execute();
+                    new EsperaAPP(this).execute();
                     intent = new Intent(this, MainActivity.class);
                     intent.putExtra("usuario", usuarioRegistrado.getNombreUsuario());
                     Log.i("debug", usuarioRegistrado.getNombreUsuario());
@@ -79,38 +78,4 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
         }
     }
 
-    class EsperaAPP extends AsyncTask<Void, Integer, Integer> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pb.setMax(100);
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            pb.setProgress(values[0]);
-
-        }
-
-        @Override
-        protected Integer doInBackground(Void... arg0) {
-
-            for (int i = 0; i < 100; i++) {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-
-            startActivity(intent);
-        }
-    }
 }
