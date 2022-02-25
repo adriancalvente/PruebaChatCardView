@@ -1,6 +1,8 @@
 package com.herprogramacion.pruebachatcardview.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,10 +21,17 @@ import com.herprogramacion.pruebachatcardview.models.Usuarios;
 public class ActividadRegistro extends AppCompatActivity implements View.OnClickListener {
     EditText usuario, contrasena;
     Button registrar, iniciar;
+    public static final int REQUEST_CODE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
+            int permisoAudio = checkSelfPermission(Manifest.permission.RECORD_AUDIO);
+            if (permisoAudio == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},REQUEST_CODE);
+            }
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_actividad_registro);
             usuario = findViewById(R.id.nombreUsuario);
