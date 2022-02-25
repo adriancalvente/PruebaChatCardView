@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-
     android:orientation="horizontal"
     tools:context=".fragments.Audio">
 
@@ -13,25 +12,29 @@
         android:id="@+id/visualizerLine"
         android:layout_width="373dp"
         android:layout_height="235dp"
+        android:visibility="invisible"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.chibde.visualizer.BarVisualizer
-        android:id="@+id/visualizerBar"
+        android:id = "@+id/visualizerBar"
         android:layout_width="373dp"
         android:layout_height="235dp"
+        android:visibility="invisible"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <com.chibde.visualizer.CircleBarVisualizer
         android:id="@+id/visualizerCircleBar"
         android:layout_width="373dp"
         android:layout_height="235dp"
         android:layout_marginTop="40dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,6 +44,7 @@
         android:layout_width="373dp"
         android:layout_height="235dp"
         android:layout_marginTop="40dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +53,7 @@
         android:id="@+id/visualizerSquareBar"
         android:layout_width="373dp"
         android:layout_height="235dp"
+        android:visibility="invisible"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +63,7 @@
         android:id="@+id/visualizerLineBar"
         android:layout_width="373dp"
         android:layout_height="235dp"
+        android:visibility="invisible"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,13 +71,82 @@
 
     <Button
         android:id="@+id/play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#EFEAEA"
+        android:layout_width="64dp"
+        android:layout_height="58dp"
         android:background="@drawable/reproducir"
+        app:backgroundTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
+        app:layout_constraintVertical_bias="0.339"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/noRepetir"
+        android:layout_width="64dp"
+        android:layout_height="58dp"
+        android:background="@drawable/no_repetir"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.74"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
+        app:layout_constraintVertical_bias="0.339"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+    <Button
+        android:id="@+id/anterior"
+        android:layout_width="64dp"
+        android:layout_height="58dp"
+        android:background="@drawable/anterior"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
+        app:layout_constraintVertical_bias="0.338"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/siguiente"
+        android:layout_width="64dp"
+        android:layout_height="58dp"
+        android:background="@drawable/siguiente"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintStart_toStartOf="@+id/anterior"
+        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
+        app:layout_constraintVertical_bias="0.338"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="64dp"
+        android:layout_height="58dp"
+        android:background="@drawable/detener"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintStart_toStartOf="@+id/anterior"
+        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
+        app:layout_constraintVertical_bias="0.339"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/cambioEspectro"
+        android:layout_width="370dp"
+        android:layout_height="244dp"
+        android:layout_marginTop="40dp"
+        android:alpha="0"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
