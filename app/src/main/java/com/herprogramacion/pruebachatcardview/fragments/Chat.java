@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,10 +21,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
+import com.herprogramacion.pruebachatcardview.BBDD.AppDataBase;
 import com.herprogramacion.pruebachatcardview.R;
 import com.herprogramacion.pruebachatcardview.activity.MainActivity;
 import com.herprogramacion.pruebachatcardview.adapter.AdapterMensajes;
-import com.herprogramacion.pruebachatcardview.adapter.Mensaje;
+import com.herprogramacion.pruebachatcardview.models.Mensaje;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -96,11 +98,14 @@ public class Chat extends Fragment {
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
+        AppDataBase db = Room.databaseBuilder(inflater.getContext(), AppDataBase.class,
+                "database-name").allowMainThreadQueries().build();
         btnEnviar.setOnClickListener(view -> {
             System.out.println(MainActivity.strUsuario);
             Date date = new Date();
-            databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(new Mensaje(MainActivity.strUsuario, txtMensaje.getText().toString(), 0, id, dateFormat.format(date)));
-
+            Mensaje mensaje = new Mensaje(MainActivity.strUsuario, txtMensaje.getText().toString(), 0, id, dateFormat.format(date));
+            db.mensajesDao().insert(mensaje);
+            databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(mensaje);
             txtMensaje.setText("");
 
         });

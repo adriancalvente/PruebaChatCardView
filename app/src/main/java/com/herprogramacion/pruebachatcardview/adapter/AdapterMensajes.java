@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.herprogramacion.pruebachatcardview.activity.MainActivity;
 import com.herprogramacion.pruebachatcardview.R;
+import com.herprogramacion.pruebachatcardview.models.Mensaje;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,7 +2,6 @@ package com.herprogramacion.pruebachatcardview.activity;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.herprogramacion.pruebachatcardview.BBDD.AppDataBase;
-import com.herprogramacion.pruebachatcardview.BBDD.Usuarios;
+import com.herprogramacion.pruebachatcardview.models.Usuarios;
 import com.herprogramacion.pruebachatcardview.R;
 
 public class ActividadRegistro extends AppCompatActivity implements View.OnClickListener {

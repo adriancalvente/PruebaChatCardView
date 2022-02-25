@@ -1,13 +1,41 @@
-package com.herprogramacion.pruebachatcardview.adapter;
+package com.herprogramacion.pruebachatcardview.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.time.LocalTime;
+
+@Entity
 public class Mensaje {
+    @ColumnInfo
     private String mensaje;
+    @ColumnInfo
     private String mensajeizq;
+    @ColumnInfo
     private int posicion;
+    @ColumnInfo
     private String id;
+    @ColumnInfo
     private String usuario;
+    @ColumnInfo
     private String tiempo;
+    @ColumnInfo
     private String tiempoIzq;
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo
+    private String tiempoDeEnvio;
+
+    @NonNull
+    public String getTiempoDeEnvio() {
+        return tiempoDeEnvio;
+    }
+
+    public void setTiempoDeEnvio(@NonNull String tiempoDeEnvio) {
+        this.tiempoDeEnvio = tiempoDeEnvio;
+    }
 
     public Mensaje() {
     }
@@ -27,6 +55,7 @@ public class Mensaje {
         this.id = id;
         this.usuario = usuario;
         this.tiempo = tiempo;
+        this.tiempoDeEnvio = String.valueOf(LocalTime.now());
     }
 
     public String getId() {
