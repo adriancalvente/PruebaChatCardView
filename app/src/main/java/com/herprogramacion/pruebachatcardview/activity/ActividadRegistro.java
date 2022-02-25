@@ -48,7 +48,6 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
                     intent = new Intent(this, MainActivity.class);
                     intent.putExtra("usuario", usuarioRegistrado.getNombreUsuario());
                     Log.i("debug", usuarioRegistrado.getNombreUsuario());
-//                    startActivity(intent);
                 } else {
                     Toast.makeText(this, "Usuario o Contraseña incorrectos",
                             Toast.LENGTH_SHORT).show();
@@ -73,7 +72,6 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
                     Toast.makeText(this, "Ya existe un usuario con ese nombre",
                             Toast.LENGTH_SHORT).show();
                 }
-
                 break;
         }
     }
