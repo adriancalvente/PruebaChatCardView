@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,8 @@ import com.herprogramacion.pruebachatcardview.R;
 public class ActividadRegistro extends AppCompatActivity implements View.OnClickListener {
     EditText usuario, contrasena;
     Button registrar, iniciar;
+    ProgressBar pb;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
         contrasena = findViewById(R.id.contrasena);
         registrar = findViewById(R.id.btnRegistrar);
         iniciar = findViewById(R.id.btnIniciar);
+        pb = findViewById(R.id.progressBar);
     }
 
     @Override
@@ -40,10 +44,12 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
                 Usuarios usuarioRegistrado = db.usuariosDao().findById(usuario.getText().toString(), contrasena.getText().toString());
                 if (usuarioRegistrado != null) {
                     //Iniciar main Activity (enviar usuario)
-                    Intent intent = new Intent(this, MainActivity.class);
+                    pb.setVisibility(View.VISIBLE);
+                    new EsperaAPP().execute();
+                    intent = new Intent(this, MainActivity.class);
                     intent.putExtra("usuario", usuarioRegistrado.getNombreUsuario());
                     Log.i("debug", usuarioRegistrado.getNombreUsuario());
-                    startActivity(intent);
+//                    startActivity(intent);
                 } else {
                     Toast.makeText(this, "Usuario o Contraseña incorrectos",
                             Toast.LENGTH_SHORT).show();
@@ -70,6 +76,41 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
                 }
 
                 break;
+        }
+    }
+
+    class EsperaAPP extends AsyncTask<Void, Integer, Integer> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pb.setMax(100);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            pb.setProgress(values[0]);
+
+        }
+
+        @Override
+        protected Integer doInBackground(Void... arg0) {
+
+            for (int i = 0; i < 100; i++) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+
+            startActivity(intent);
         }
     }
 }
