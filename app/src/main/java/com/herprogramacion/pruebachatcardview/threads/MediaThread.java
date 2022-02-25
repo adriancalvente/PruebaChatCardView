@@ -15,7 +15,7 @@ public class MediaThread extends Thread {
 
     public MediaThread(Context context, int resource, VideoView videoView) {
         this.videoView = videoView;
-        this.videoView.setVideoPath("android.resource://" + context.getPackageName() + "/" + R.raw.video);
+        this.videoView.setVideoPath("android.resource://" + context.getPackageName() + "/" + resource);
         mediaController = new MediaController(context);
         this.videoView.setMediaController(mediaController);
         mediaController.setAnchorView(videoView);
