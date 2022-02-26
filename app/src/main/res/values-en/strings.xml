@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PruebaChatCardView</string>
+    <string name="app_name">Viber</string>
     <string name="nombre_de_usuario">Username</string>
     <string name="introduce_contrasena">Insert password</string>
     <string name="registrar">Sing up</string>
