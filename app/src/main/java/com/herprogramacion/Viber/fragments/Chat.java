@@ -133,8 +133,6 @@ public class Chat extends Fragment {
 
                         adapter.addMensaje(m);
 
-
-
                 }
 
                 @Override

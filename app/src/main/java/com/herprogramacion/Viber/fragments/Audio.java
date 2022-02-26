@@ -1,11 +1,14 @@
 package com.herprogramacion.Viber.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,7 @@ import java.util.concurrent.TimeUnit;
  * Use the {@link Audio#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class Audio extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -56,10 +60,14 @@ public class Audio extends Fragment {
     private LineBarVisualizer lineBarVisualizer;
     private SeekBar seekBar;
     Animation myAnim;
+    Runnable runnable;
+    Handler handler;
     private TextView totalCancion;
     private TextView progresoCancion;
     private int cont = 0;
     private Toast customToast;
+
+
 
     public Audio() {
         // Required empty public constructor
@@ -106,9 +114,8 @@ public class Audio extends Fragment {
                 btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
             } else {
                 reproducirMusica();
-                objetosInvisibles();
-                localizarEspectro();
-                iniciarHilo();
+
+
             }
         });
         btnStop.setOnClickListener(view -> {
@@ -199,45 +206,48 @@ public class Audio extends Fragment {
         return inflate;
     }
 
-    private void reproducirSiguinteCancion() {
-        vectormp[posicion].stop();
-        posicion++;
-        vectormp[posicion].start();
+    private void updateSeekBar() {
+        int currpos = vectormp[posicion].getCurrentPosition();
         String endTime = formatDuration(vectormp[posicion].getDuration());
-        seekBar.setMax(vectormp[posicion].getDuration());
         totalCancion.setText(endTime);
+        seekBar.setMax(vectormp[posicion].getDuration());
+        String progressSong = formatDuration(currpos);
+        progresoCancion.setText(progressSong);
+        seekBar.setProgress(currpos);
+        System.out.println((vectormp[posicion].getDuration()-100)+"    "+currpos);
+        if ((vectormp[posicion].getDuration()-100)<=currpos) {
+            reproducirSiguinteCancion();
+        }
+        runnable=new Runnable() {
+            @Override
+            public void run() {
+                updateSeekBar();
+
+            }
+        };
+        handler.postDelayed(runnable, 1000);
+
+    }
+
+    private void reproducirSiguinteCancion() {
+        if (posicion < vectormp.length - 1) {
+            vectormp[posicion].stop();
+            posicion++;
+            reproducirMusica();
+        }else{
+            customToast.setText("No hay mas canciones");
+            customToast.show();
+        }
     }
 
     private void reproducirMusica() {
         btnPlay_pause.setBackgroundResource(R.drawable.pausa);
         vectormp[posicion].start();
-        seekBar.setMax(vectormp[posicion].getDuration());
-        String endTime = formatDuration(vectormp[posicion].getDuration());
-        totalCancion.setText(endTime);
+        objetosInvisibles();
+        localizarEspectro();
+        updateSeekBar();
     }
 
-    private void iniciarHilo() {
-        new Thread(() -> {
-            int totalDuracion = vectormp[posicion].getDuration();
-            String progressSong;
-            int currentPosicion = 0;
-            String endTime = formatDuration(vectormp[posicion].getDuration());
-            seekBar.setMax(vectormp[posicion].getDuration());
-            totalCancion.setText(endTime);
-            while (currentPosicion < totalDuracion) {
-                currentPosicion = vectormp[posicion].getCurrentPosition();
-                progressSong = formatDuration(vectormp[posicion].getCurrentPosition());
-                progresoCancion.setText(progressSong);
-                seekBar.setProgress(currentPosicion);
-                if (progressSong.equals(totalCancion.getText().toString())) {
-                    reproducirSiguinteCancion();
-                    localizarEspectro();
-                }
-
-            }
-
-        }).start();
-    }
 
     private void declararObjetos(View inflate) {
         LayoutInflater inflaterCustom = getLayoutInflater();
@@ -258,6 +268,7 @@ public class Audio extends Fragment {
         circleVisualizer = inflate.findViewById(R.id.visualizerCircle);
         lineBarVisualizer = inflate.findViewById(R.id.visualizerLineBar);
         vectormp = new MediaPlayer[5];
+        handler = new Handler();
         setCanciones();
         btnStop = inflate.findViewById(R.id.btnStop);
         btnPlay_pause = inflate.findViewById(R.id.play);
