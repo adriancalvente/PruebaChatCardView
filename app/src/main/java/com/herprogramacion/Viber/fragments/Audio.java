@@ -54,10 +54,7 @@ public class Audio extends Fragment {
     private CircleVisualizer circleVisualizer;
     private SquareBarVisualizer squareBarVisualizer;
     private LineBarVisualizer lineBarVisualizer;
-    private SeekBar seekBar;
     Animation myAnim;
-    private TextView totalCancion;
-    private TextView progresoCancion;
     private int cont = 0;
     private Toast customToast;
 
@@ -108,7 +105,6 @@ public class Audio extends Fragment {
                 reproducirMusica();
                 objetosInvisibles();
                 localizarEspectro();
-                iniciarHilo();
             }
         });
         btnStop.setOnClickListener(view -> {
@@ -182,20 +178,7 @@ public class Audio extends Fragment {
             localizarEspectro();
 
         });
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                vectormp[posicion].seekTo(seekBar.getProgress());
-            }
-        });
         return inflate;
     }
 
@@ -204,40 +187,15 @@ public class Audio extends Fragment {
         posicion++;
         vectormp[posicion].start();
         String endTime = formatDuration(vectormp[posicion].getDuration());
-        seekBar.setMax(vectormp[posicion].getDuration());
-        totalCancion.setText(endTime);
+
     }
 
     private void reproducirMusica() {
         btnPlay_pause.setBackgroundResource(R.drawable.pausa);
         vectormp[posicion].start();
-        seekBar.setMax(vectormp[posicion].getDuration());
         String endTime = formatDuration(vectormp[posicion].getDuration());
-        totalCancion.setText(endTime);
     }
 
-    private void iniciarHilo() {
-        new Thread(() -> {
-            int totalDuracion = vectormp[posicion].getDuration();
-            String progressSong;
-            int currentPosicion = 0;
-            String endTime = formatDuration(vectormp[posicion].getDuration());
-            seekBar.setMax(vectormp[posicion].getDuration());
-            totalCancion.setText(endTime);
-            while (currentPosicion < totalDuracion) {
-                currentPosicion = vectormp[posicion].getCurrentPosition();
-                progressSong = formatDuration(vectormp[posicion].getCurrentPosition());
-                progresoCancion.setText(progressSong);
-                seekBar.setProgress(currentPosicion);
-                if (progressSong.equals(totalCancion.getText().toString())) {
-                    reproducirSiguinteCancion();
-                    localizarEspectro();
-                }
-
-            }
-
-        }).start();
-    }
 
     private void declararObjetos(View inflate) {
         LayoutInflater inflaterCustom = getLayoutInflater();
@@ -247,9 +205,6 @@ public class Audio extends Fragment {
         textToast.setText("No hay mas canciones");
         customToast = new Toast(getContext());
         customToast.setView(toastView);
-        totalCancion = inflate.findViewById(R.id.TotalCancion);
-        progresoCancion = inflate.findViewById(R.id.cambioTiempo);
-        seekBar = inflate.findViewById(R.id.barraMusica);
         cambioEspectro = inflate.findViewById(R.id.cambioEspectro);
         lineVisualizer = inflate.findViewById(R.id.visualizerLine);
         barVisualizer = inflate.findViewById(R.id.visualizerBar);
