@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -33,6 +37,7 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
             if (permisoAudio == PackageManager.PERMISSION_DENIED) {
                 requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_CODE);
             }
+            cambiarTransicionActividades();
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_actividad_registro);
             usuario = findViewById(R.id.nombreUsuario);
@@ -43,6 +48,12 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
         } catch (Exception e) {
             Log.e("unexpected", "Unexpected error");
         }
+    }
+
+    private void cambiarTransicionActividades() {
+        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+        getWindow().setExitTransition(new Explode());
+        getWindow().setEnterTransition(new Explode());
     }
 
     @Override

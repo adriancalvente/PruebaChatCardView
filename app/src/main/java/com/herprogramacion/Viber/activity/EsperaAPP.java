@@ -1,7 +1,9 @@
 package com.herprogramacion.Viber.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.os.AsyncTask;
+import android.view.Window;
 
 public class EsperaAPP extends AsyncTask<Void, Integer, Integer> {
 
@@ -40,6 +42,6 @@ public class EsperaAPP extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
-        actividadRegistro.startActivity(actividadRegistro.intent);
+        actividadRegistro.startActivity(actividadRegistro.intent,ActivityOptions.makeSceneTransitionAnimation(actividadRegistro).toBundle());
     }
 }
