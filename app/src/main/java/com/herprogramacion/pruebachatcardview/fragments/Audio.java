@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,8 @@ import com.chibde.visualizer.LineBarVisualizer;
 import com.chibde.visualizer.LineVisualizer;
 import com.chibde.visualizer.SquareBarVisualizer;
 import com.herprogramacion.pruebachatcardview.R;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +53,9 @@ public class Audio extends Fragment {
     private CircleVisualizer circleVisualizer;
     private SquareBarVisualizer squareBarVisualizer;
     private LineBarVisualizer lineBarVisualizer;
+    private SeekBar seekBar;
+    private TextView totalCancion;
+    private TextView progresoCancion;
     private int cont = 0;
     private Toast customToast;
 
@@ -96,7 +103,10 @@ public class Audio extends Fragment {
         textToast.setText("No hay mas canciones");
         customToast = new Toast(getContext());
         customToast.setView(toastView);
+        totalCancion = inflate.findViewById(R.id.TotalCancion);
+        progresoCancion = inflate.findViewById(R.id.cambioTiempo);
 
+        seekBar = inflate.findViewById(R.id.barraMusica);
         cambioEspectro = inflate.findViewById(R.id.cambioEspectro);
         lineVisualizer = inflate.findViewById(R.id.visualizerLine);
         lineVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
@@ -109,11 +119,7 @@ public class Audio extends Fragment {
         lineBarVisualizer = inflate.findViewById(R.id.visualizerLineBar);
 
         vectormp = new MediaPlayer[5];
-        vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
-        vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
-        vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
-        vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
-        vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
+        setCanciones();
 
         btnStop = inflate.findViewById(R.id.btnStop);
         btnPlay_pause = inflate.findViewById(R.id.play);
@@ -130,18 +136,36 @@ public class Audio extends Fragment {
                 btnPlay_pause.setBackgroundResource(R.drawable.pausa);
                 objetosInvisibles();
                 localizarEspectro(inflate);
+                seekBar.setMax(vectormp[posicion].getDuration());
                 vectormp[posicion].start();
+                String endTime = formatDuration(vectormp[posicion].getDuration());
+                totalCancion.setText(endTime);
+                new Thread(() -> {
+                    int totalDuracion = vectormp[posicion].getDuration();
+                    String progressSong;
+                    int currentPosicion = 0;
+                    while (currentPosicion < totalDuracion) {
+                        try {
+                            Thread.sleep(500);
+                            currentPosicion = vectormp[posicion].getCurrentPosition();
+
+                            progressSong=formatDuration(vectormp[posicion].getCurrentPosition());
+                            progresoCancion.setText(progressSong);
+                            seekBar.setProgress(currentPosicion);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+
             }
         });
 
         btnStop.setOnClickListener(view -> {
             if (vectormp[posicion] != null) {
                 vectormp[posicion].stop();
-                vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
-                vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
-                vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
-                vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
-                vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
+                setCanciones();
                 posicion = 0;
                 btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
             }
@@ -185,22 +209,14 @@ public class Audio extends Fragment {
             if (posicion >= 1) {
                 if (vectormp[posicion].isPlaying()) {
                     vectormp[posicion].stop();
-                    vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
-                    vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
-                    vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
-                    vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
-                    vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
+                    setCanciones();
                     posicion--;
                     vectormp[posicion].start();
                     objetosInvisibles();
                     localizarEspectro(inflate);
                 } else {
                     posicion--;
-                    vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
-                    vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
-                    vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
-                    vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
-                    vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
+                    setCanciones();
                 }
             } else {
                 customToast.show();
@@ -216,8 +232,40 @@ public class Audio extends Fragment {
             localizarEspectro(inflate);
 
         });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
 
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                vectormp[posicion].seekTo(seekBar.getProgress());
+            }
+        });
         return inflate;
+    }
+
+    @SuppressLint("DefaultLocale")
+    private String formatDuration(long duration) {
+        long minutes = TimeUnit.MINUTES.convert(duration, TimeUnit.MILLISECONDS);
+        long seconds = TimeUnit.SECONDS.convert(duration, TimeUnit.MILLISECONDS)
+                - minutes * TimeUnit.SECONDS.convert(1, TimeUnit.MINUTES);
+
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    private void setCanciones() {
+        vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
+        vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
+        vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
+        vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
+        vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
     }
 
     private void localizarEspectro(View inflate) {
@@ -232,6 +280,8 @@ public class Audio extends Fragment {
                 barVisualizer.release();
                 barVisualizer.setVisibility(View.VISIBLE);
                 // set the custom color to the line.
+
+
                 barVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
                 // define a custom number of bars we want in the visualizer it is between (10 - 256).
                 barVisualizer.setDensity(80);

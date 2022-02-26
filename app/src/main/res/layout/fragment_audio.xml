@@ -149,4 +149,36 @@
         app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/barraMusica"
+        android:layout_width="307dp"
+        android:layout_height="22dp"
+        android:backgroundTint="#F6F3F3"
+        android:progressBackgroundTint="#FAF8F8"
+        app:layout_constraintBottom_toTopOf="@+id/play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visualizerLine" />
+
+    <TextView
+        android:id="@+id/cambioTiempo"
+        android:layout_width="45dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/anterior"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cambioEspectro"
+        app:layout_constraintVertical_bias="0.461" />
+
+    <TextView
+        android:id="@+id/TotalCancion"
+        android:layout_width="49dp"
+        android:layout_height="21dp"
+        android:textColor="#F3F3F3"
+        app:layout_constraintBottom_toTopOf="@+id/siguiente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/barraMusica"
+        app:layout_constraintTop_toBottomOf="@+id/visualizerLine" />
 </androidx.constraintlayout.widget.ConstraintLayout>
