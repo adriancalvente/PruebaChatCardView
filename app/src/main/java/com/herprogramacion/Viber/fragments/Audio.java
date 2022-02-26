@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * Use the {@link Audio#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Audio extends Fragment {
+public class Audio extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,7 +48,6 @@ public class Audio extends Fragment {
     private String mParam1;
     private String mParam2;
     private Button btnPlay_pause, btnRepetir, cambioEspectro, btnStop, btnSiguente, btnAnterior;
-    private MediaPlayer mp;
     private LineVisualizer lineVisualizer;
     private BarVisualizer barVisualizer;
     private CircleBarVisualizer circleBarVisualizer;
@@ -56,6 +55,7 @@ public class Audio extends Fragment {
     private SquareBarVisualizer squareBarVisualizer;
     private LineBarVisualizer lineBarVisualizer;
     private SeekBar seekBar;
+    Animation myAnim;
     private TextView totalCancion;
     private TextView progresoCancion;
     private int cont = 0;
@@ -98,70 +98,18 @@ public class Audio extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_audio, container, false);
-        mp = MediaPlayer.create(getActivity(), R.raw.video);
-        LayoutInflater inflaterCustom = getLayoutInflater();
-        View toastView = inflaterCustom.inflate(R.layout.custom_toast, inflate.findViewById(R.id.toast_custom));
-        TextView textToast = toastView.findViewById(R.id.tvCustomToast);
-        final Animation myAnim = AnimationUtils.loadAnimation(getContext(),R.anim.rebote);
-        textToast.setText("No hay mas canciones");
-        customToast = new Toast(getContext());
-        customToast.setView(toastView);
+        declararObjetos(inflate);
 
-        totalCancion = inflate.findViewById(R.id.TotalCancion);
-        progresoCancion = inflate.findViewById(R.id.cambioTiempo);
-
-        seekBar = inflate.findViewById(R.id.barraMusica);
-        cambioEspectro = inflate.findViewById(R.id.cambioEspectro);
-        lineVisualizer = inflate.findViewById(R.id.visualizerLine);
-        lineVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
-        lineVisualizer.setStrokeWidth(1);
-
-        barVisualizer = inflate.findViewById(R.id.visualizerBar);
-        squareBarVisualizer = inflate.findViewById(R.id.visualizerSquareBar);
-        circleBarVisualizer = inflate.findViewById(R.id.visualizerCircleBar);
-        circleVisualizer = inflate.findViewById(R.id.visualizerCircle);
-        lineBarVisualizer = inflate.findViewById(R.id.visualizerLineBar);
-
-        vectormp = new MediaPlayer[5];
-        setCanciones();
-
-        btnStop = inflate.findViewById(R.id.btnStop);
-        btnPlay_pause = inflate.findViewById(R.id.play);
-        btnRepetir = inflate.findViewById(R.id.noRepetir);
-        btnSiguente = inflate.findViewById(R.id.siguiente);
-        btnAnterior = inflate.findViewById(R.id.anterior);
         btnPlay_pause.setOnClickListener(view -> {
             btnPlay_pause.startAnimation(myAnim);
             if (vectormp[posicion].isPlaying()) {
                 vectormp[posicion].pause();
                 btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
             } else {
-                btnPlay_pause.setBackgroundResource(R.drawable.pausa);
+                reproducirMusica();
                 objetosInvisibles();
-                localizarEspectro(inflate);
-                seekBar.setMax(vectormp[posicion].getDuration());
-                vectormp[posicion].start();
-                String endTime = formatDuration(vectormp[posicion].getDuration());
-                totalCancion.setText(endTime);
-                new Thread(() -> {
-                    int totalDuracion = vectormp[posicion].getDuration();
-                    String progressSong;
-                    int currentPosicion = 0;
-                    while (currentPosicion < totalDuracion) {
-                        try {
-                            Thread.sleep(500);
-                            currentPosicion = vectormp[posicion].getCurrentPosition();
-
-                            progressSong = formatDuration(vectormp[posicion].getCurrentPosition());
-                            progresoCancion.setText(progressSong);
-                            seekBar.setProgress(currentPosicion);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-
-
+                localizarEspectro();
+                iniciarHilo();
             }
         });
 
@@ -197,11 +145,9 @@ public class Audio extends Fragment {
             btnSiguente.startAnimation(myAnim);
             if (posicion < vectormp.length - 1) {
                 if (vectormp[posicion].isPlaying()) {
-                    vectormp[posicion].stop();
-                    posicion++;
-                    vectormp[posicion].start();
+                    reproducirSiguinteCancion();
                     objetosInvisibles();
-                    localizarEspectro(inflate);
+                    localizarEspectro();
                 } else {
                     posicion++;
                 }
@@ -220,7 +166,7 @@ public class Audio extends Fragment {
                     posicion--;
                     vectormp[posicion].start();
                     objetosInvisibles();
-                    localizarEspectro(inflate);
+                    localizarEspectro();
                 } else {
                     posicion--;
                     setCanciones();
@@ -236,26 +182,88 @@ public class Audio extends Fragment {
                 cont++;
             }
             objetosInvisibles();
-            localizarEspectro(inflate);
+            localizarEspectro();
 
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 vectormp[posicion].seekTo(seekBar.getProgress());
             }
         });
         return inflate;
+    }
+
+    private void reproducirSiguinteCancion() {
+        vectormp[posicion].stop();
+        posicion++;
+        vectormp[posicion].start();
+    }
+
+    private void reproducirMusica() {
+        btnPlay_pause.setBackgroundResource(R.drawable.pausa);
+        seekBar.setMax(vectormp[posicion].getDuration());
+        vectormp[posicion].start();
+        String endTime = formatDuration(vectormp[posicion].getDuration());
+        totalCancion.setText(endTime);
+    }
+
+    private void iniciarHilo() {
+        new Thread(() -> {
+            int totalDuracion = vectormp[posicion].getDuration();
+            String endTime = formatDuration(vectormp[posicion].getDuration());
+            String progressSong;
+            int currentPosicion = 0;
+            while (currentPosicion < totalDuracion) {
+                try {
+                    Thread.sleep(500);
+                    currentPosicion = vectormp[posicion].getCurrentPosition();
+                    progressSong = formatDuration(vectormp[posicion].getCurrentPosition());
+                    progresoCancion.setText(progressSong);
+                    seekBar.setProgress(currentPosicion);
+                    if (progressSong.equals(endTime)){
+                        reproducirSiguinteCancion();
+                        localizarEspectro();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }).start();
+    }
+
+    private void declararObjetos(View inflate) {
+        LayoutInflater inflaterCustom = getLayoutInflater();
+        View toastView = inflaterCustom.inflate(R.layout.custom_toast, inflate.findViewById(R.id.toast_custom));
+        TextView textToast = toastView.findViewById(R.id.tvCustomToast);
+        myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.rebote);
+        textToast.setText("No hay mas canciones");
+        customToast = new Toast(getContext());
+        customToast.setView(toastView);
+        totalCancion = inflate.findViewById(R.id.TotalCancion);
+        progresoCancion = inflate.findViewById(R.id.cambioTiempo);
+        seekBar = inflate.findViewById(R.id.barraMusica);
+        cambioEspectro = inflate.findViewById(R.id.cambioEspectro);
+        lineVisualizer = inflate.findViewById(R.id.visualizerLine);
+        barVisualizer = inflate.findViewById(R.id.visualizerBar);
+        squareBarVisualizer = inflate.findViewById(R.id.visualizerSquareBar);
+        circleBarVisualizer = inflate.findViewById(R.id.visualizerCircleBar);
+        circleVisualizer = inflate.findViewById(R.id.visualizerCircle);
+        lineBarVisualizer = inflate.findViewById(R.id.visualizerLineBar);
+        vectormp = new MediaPlayer[5];
+        setCanciones();
+        btnStop = inflate.findViewById(R.id.btnStop);
+        btnPlay_pause = inflate.findViewById(R.id.play);
+        btnRepetir = inflate.findViewById(R.id.noRepetir);
+        btnSiguente = inflate.findViewById(R.id.siguiente);
+        btnAnterior = inflate.findViewById(R.id.anterior);
     }
 
     @SuppressLint("DefaultLocale")
@@ -275,83 +283,76 @@ public class Audio extends Fragment {
         vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
     }
 
-    private void localizarEspectro(View inflate) {
+    public void localizarEspectro() {
         switch (cont) {
             case 0:
-                lineVisualizer.release();
-                lineVisualizer.setVisibility(View.VISIBLE);
-                // set a custom color to the line.
-                lineVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+                activarLineVisualicer();
                 break;
             case 1:
-                barVisualizer.release();
-                barVisualizer.setVisibility(View.VISIBLE);
-                // set the custom color to the line.
-
-
-                barVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
-                // define a custom number of bars we want in the visualizer it is between (10 - 256).
-                barVisualizer.setDensity(80);
-
-                // Set your media player to the visualizer.
-                barVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+                activarBarVisualizer();
                 break;
             case 2:
-                circleBarVisualizer.release();
-                circleBarVisualizer.setVisibility(View.VISIBLE);
-
-                // set the custom color to the line.
-                circleBarVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
-
-                // Set the media player to the visualizer.
-                circleBarVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+                activarCircleVisualicer();
                 break;
             case 3:
-                circleVisualizer.release();
-                circleVisualizer.setVisibility(View.VISIBLE);
-
-                // set custom color to the line.
-                circleVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
-
-                // Customize the size of the circle. by default, the multipliers are 1.
-                circleVisualizer.setRadiusMultiplier(2.2f);
-
-                // set the line with for the visualizer between 1-10 default 1.
-                circleVisualizer.setStrokeWidth(2);
-
-                // Set the media player to the visualizer.
-                circleVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+                activarCircleVisualizer();
                 break;
             case 4:
-                squareBarVisualizer.setVisibility(View.VISIBLE);
-
-                // set custom color to the line.
-                squareBarVisualizer.setColor(ContextCompat.getColor(inflate.getContext(), R.color.espectro));
-
-                // define a custom number of bars you want in the visualizer between (10 - 256).
-                squareBarVisualizer.setDensity(65);
-
-                // Set Spacing
-                squareBarVisualizer.setGap(2);
-
-                // Set the media player to the visualizer.
-                squareBarVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+                activarSquareBarVisualizer();
                 break;
             case 5:
-                lineBarVisualizer.setVisibility(View.VISIBLE);
-
-                // setting the custom color to the line.
-                lineBarVisualizer.setColor(ContextCompat.getColor(inflate.getContext(), R.color.espectro));
-
-                // define the custom number of bars we want in the visualizer between (10 - 256).
-                lineBarVisualizer.setDensity(60);
-
-                // Setting the media player to the visualizer.
-                lineBarVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+                activarLineBarVisualizer();
                 break;
         }
 
 
+    }
+
+    private void activarLineBarVisualizer() {
+        lineBarVisualizer.setVisibility(View.VISIBLE);
+        lineBarVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
+        lineBarVisualizer.setDensity(60);
+        lineBarVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+    }
+
+    private void activarSquareBarVisualizer() {
+        squareBarVisualizer.setVisibility(View.VISIBLE);
+        squareBarVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
+        squareBarVisualizer.setDensity(65);
+        squareBarVisualizer.setGap(2);
+        squareBarVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+    }
+
+    private void activarCircleVisualizer() {
+        circleVisualizer.release();
+        circleVisualizer.setVisibility(View.VISIBLE);
+        circleVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
+        circleVisualizer.setRadiusMultiplier(2.2f);
+        circleVisualizer.setStrokeWidth(2);
+        circleVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+    }
+
+    private void activarCircleVisualicer() {
+        circleBarVisualizer.release();
+        circleBarVisualizer.setVisibility(View.VISIBLE);
+        circleBarVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
+        circleBarVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+    }
+
+    private void activarBarVisualizer() {
+        barVisualizer.release();
+        barVisualizer.setVisibility(View.VISIBLE);
+        barVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
+        barVisualizer.setDensity(80);
+        barVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
+    }
+
+    private void activarLineVisualicer() {
+        lineVisualizer.release();
+        lineVisualizer.setVisibility(View.VISIBLE);
+        lineVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
+        lineVisualizer.setStrokeWidth(1);
+        lineVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
     }
 
     private void objetosInvisibles() {
@@ -363,4 +364,6 @@ public class Audio extends Fragment {
         lineBarVisualizer.setVisibility(View.INVISIBLE);
     }
 
+  
+    
 }
