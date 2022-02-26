@@ -1,15 +1,32 @@
 package com.herprogramacion.pruebachatcardview.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.herprogramacion.pruebachatcardview.threads.MediaThread;
+import com.chibde.visualizer.BarVisualizer;
+import com.chibde.visualizer.CircleBarVisualizer;
+import com.chibde.visualizer.CircleVisualizer;
+import com.chibde.visualizer.LineBarVisualizer;
+import com.chibde.visualizer.LineVisualizer;
+import com.chibde.visualizer.SquareBarVisualizer;
 import com.herprogramacion.pruebachatcardview.R;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -131,7 +148,7 @@ public class Audio extends Fragment {
                             Thread.sleep(500);
                             currentPosicion = vectormp[posicion].getCurrentPosition();
 
-                            progressSong=formatDuration(vectormp[posicion].getCurrentPosition());
+                            progressSong = formatDuration(vectormp[posicion].getCurrentPosition());
                             progresoCancion.setText(progressSong);
                             seekBar.setProgress(currentPosicion);
                         } catch (InterruptedException e) {

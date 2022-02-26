@@ -17,8 +17,8 @@ import java.util.List;
 
 public class AdapterMensajes extends RecyclerView.Adapter<HolderMensaje> {
 
-    List<Mensaje> listMensaje = new ArrayList<>();
     private final Context c;
+    List<Mensaje> listMensaje = new ArrayList<>();
 
     public AdapterMensajes(Context c) {
         this.c = c;

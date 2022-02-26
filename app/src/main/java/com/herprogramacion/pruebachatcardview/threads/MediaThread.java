@@ -7,10 +7,10 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 public class MediaThread extends Thread {
+    private final boolean exit = false;
     private VideoView videoView;
     private MediaPlayer mediaPlayer;
     private MediaController mediaController;
-    private final boolean exit = false;
 
     public MediaThread(Context context, int resource, VideoView videoView) {
         try {
