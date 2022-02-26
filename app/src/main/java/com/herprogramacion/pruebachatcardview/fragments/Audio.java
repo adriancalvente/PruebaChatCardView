@@ -188,7 +188,11 @@ public class Audio extends Fragment {
                     localizarEspectro(inflate);
                 } else {
                     posicion--;
-
+                    vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
+                    vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
+                    vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
+                    vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
+                    vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
                 }
             } else {
                 Toast.makeText(getContext(), "No hay mas canciones", Toast.LENGTH_SHORT).show();
