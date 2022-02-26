@@ -10,4 +10,5 @@
     <string name="bienvenido">BIENVENIDO</string>
     <string name="mensaje_bienvenido">Bienvenido al trabajo final de android de Adrián Calvente y Julián de Juan</string>
     <string name="continuar">Continuar</string>
+    <string name="escribe_un_mensaje">Escribe un mensaje</string>
 </resources>

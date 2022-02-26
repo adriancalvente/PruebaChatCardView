@@ -10,4 +10,5 @@
     <string name="bienvenido">WELCOME</string>
     <string name="mensaje_bienvenido">Welcome to Adrián Calvente and Julián de Juan android final project.</string>
     <string name="continuar">Continue</string>
+    <string name="escribe_un_mensaje">Write a message</string>
 </resources>
