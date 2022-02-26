@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * Use the {@link Audio#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Audio extends Fragment{
+public class Audio extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -99,7 +99,6 @@ public class Audio extends Fragment{
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_audio, container, false);
         declararObjetos(inflate);
-
         btnPlay_pause.setOnClickListener(view -> {
             btnPlay_pause.startAnimation(myAnim);
             if (vectormp[posicion].isPlaying()) {
@@ -112,7 +111,6 @@ public class Audio extends Fragment{
                 iniciarHilo();
             }
         });
-
         btnStop.setOnClickListener(view -> {
             if (vectormp[posicion] != null) {
                 btnStop.startAnimation(myAnim);
@@ -122,7 +120,6 @@ public class Audio extends Fragment{
                 btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
             }
         });
-
         btnRepetir.setOnClickListener(view -> {
             btnRepetir.startAnimation(myAnim);
             if (repetir == 1) {
@@ -189,9 +186,11 @@ public class Audio extends Fragment{
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 vectormp[posicion].seekTo(seekBar.getProgress());
@@ -204,12 +203,15 @@ public class Audio extends Fragment{
         vectormp[posicion].stop();
         posicion++;
         vectormp[posicion].start();
+        String endTime = formatDuration(vectormp[posicion].getDuration());
+        seekBar.setMax(vectormp[posicion].getDuration());
+        totalCancion.setText(endTime);
     }
 
     private void reproducirMusica() {
         btnPlay_pause.setBackgroundResource(R.drawable.pausa);
-        seekBar.setMax(vectormp[posicion].getDuration());
         vectormp[posicion].start();
+        seekBar.setMax(vectormp[posicion].getDuration());
         String endTime = formatDuration(vectormp[posicion].getDuration());
         totalCancion.setText(endTime);
     }
@@ -217,23 +219,21 @@ public class Audio extends Fragment{
     private void iniciarHilo() {
         new Thread(() -> {
             int totalDuracion = vectormp[posicion].getDuration();
-            String endTime = formatDuration(vectormp[posicion].getDuration());
             String progressSong;
             int currentPosicion = 0;
+            String endTime = formatDuration(vectormp[posicion].getDuration());
+            seekBar.setMax(vectormp[posicion].getDuration());
+            totalCancion.setText(endTime);
             while (currentPosicion < totalDuracion) {
-                try {
-                    Thread.sleep(500);
-                    currentPosicion = vectormp[posicion].getCurrentPosition();
-                    progressSong = formatDuration(vectormp[posicion].getCurrentPosition());
-                    progresoCancion.setText(progressSong);
-                    seekBar.setProgress(currentPosicion);
-                    if (progressSong.equals(endTime)){
-                        reproducirSiguinteCancion();
-                        localizarEspectro();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                currentPosicion = vectormp[posicion].getCurrentPosition();
+                progressSong = formatDuration(vectormp[posicion].getCurrentPosition());
+                progresoCancion.setText(progressSong);
+                seekBar.setProgress(currentPosicion);
+                if (progressSong.equals(totalCancion.getText().toString())) {
+                    reproducirSiguinteCancion();
+                    localizarEspectro();
                 }
+
             }
 
         }).start();
@@ -269,9 +269,7 @@ public class Audio extends Fragment{
     @SuppressLint("DefaultLocale")
     private String formatDuration(long duration) {
         long minutes = TimeUnit.MINUTES.convert(duration, TimeUnit.MILLISECONDS);
-        long seconds = TimeUnit.SECONDS.convert(duration, TimeUnit.MILLISECONDS)
-                - minutes * TimeUnit.SECONDS.convert(1, TimeUnit.MINUTES);
-
+        long seconds = TimeUnit.SECONDS.convert(duration, TimeUnit.MILLISECONDS) - minutes * TimeUnit.SECONDS.convert(1, TimeUnit.MINUTES);
         return String.format("%02d:%02d", minutes, seconds);
     }
 
@@ -364,6 +362,5 @@ public class Audio extends Fragment{
         lineBarVisualizer.setVisibility(View.INVISIBLE);
     }
 
-  
-    
+
 }
