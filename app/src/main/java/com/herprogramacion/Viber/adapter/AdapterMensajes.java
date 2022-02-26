@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.adapter;
+package com.herprogramacion.Viber.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.herprogramacion.pruebachatcardview.R;
-import com.herprogramacion.pruebachatcardview.activity.MainActivity;
-import com.herprogramacion.pruebachatcardview.models.Mensaje;
+import com.herprogramacion.Viber.R;
+import com.herprogramacion.Viber.activity.MainActivity;
+import com.herprogramacion.Viber.models.Mensaje;
 
 import java.util.ArrayList;
 import java.util.List;

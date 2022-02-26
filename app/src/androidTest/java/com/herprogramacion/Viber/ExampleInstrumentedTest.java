@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview;
+package com.herprogramacion.Viber;
 
 import android.content.Context;
 

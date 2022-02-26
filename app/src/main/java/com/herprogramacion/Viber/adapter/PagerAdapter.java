@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.adapter;
+package com.herprogramacion.Viber.adapter;
 
 import android.util.Log;
 
@@ -8,9 +8,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.herprogramacion.pruebachatcardview.fragments.Audio;
-import com.herprogramacion.pruebachatcardview.fragments.Chat;
-import com.herprogramacion.pruebachatcardview.fragments.Video;
+import com.herprogramacion.Viber.fragments.Audio;
+import com.herprogramacion.Viber.fragments.Chat;
+import com.herprogramacion.Viber.fragments.Video;
 
 public class PagerAdapter extends FragmentStateAdapter {
 

@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.activity;
+package com.herprogramacion.Viber.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,10 +12,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.herprogramacion.pruebachatcardview.R;
-import com.herprogramacion.pruebachatcardview.adapter.PagerAdapter;
-import com.herprogramacion.pruebachatcardview.fragments.Chat;
-import com.herprogramacion.pruebachatcardview.fragments.Video;
+import com.herprogramacion.Viber.R;
+import com.herprogramacion.Viber.adapter.PagerAdapter;
+import com.herprogramacion.Viber.fragments.Chat;
+import com.herprogramacion.Viber.fragments.Video;
 
 public class MainActivity extends AppCompatActivity {
     public static String strUsuario;

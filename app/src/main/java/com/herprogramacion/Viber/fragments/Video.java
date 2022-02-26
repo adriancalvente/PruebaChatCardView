@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.fragments;
+package com.herprogramacion.Viber.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,8 +9,8 @@ import android.widget.VideoView;
 
 import androidx.fragment.app.Fragment;
 
-import com.herprogramacion.pruebachatcardview.R;
-import com.herprogramacion.pruebachatcardview.threads.MediaThread;
+import com.herprogramacion.Viber.R;
+import com.herprogramacion.Viber.threads.MediaThread;
 
 /**
  * A simple {@link Fragment} subclass.

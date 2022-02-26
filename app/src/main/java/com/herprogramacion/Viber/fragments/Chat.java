@@ -1,6 +1,7 @@
-package com.herprogramacion.pruebachatcardview.fragments;
+package com.herprogramacion.Viber.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,11 +24,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
-import com.herprogramacion.pruebachatcardview.BBDD.AppDataBase;
-import com.herprogramacion.pruebachatcardview.R;
-import com.herprogramacion.pruebachatcardview.activity.MainActivity;
-import com.herprogramacion.pruebachatcardview.adapter.AdapterMensajes;
-import com.herprogramacion.pruebachatcardview.models.Mensaje;
+import com.herprogramacion.Viber.BBDD.AppDataBase;
+import com.herprogramacion.Viber.R;
+import com.herprogramacion.Viber.activity.MainActivity;
+import com.herprogramacion.Viber.adapter.AdapterMensajes;
+import com.herprogramacion.Viber.models.Mensaje;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -91,8 +93,8 @@ public class Chat extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         try {
-
             inflate = inflater.inflate(R.layout.fragment_chat, container, false);
+            alertDialogWelcome();
             // Inflate the layout for this fragment
             id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
             try {
@@ -160,6 +162,20 @@ public class Chat extends Fragment {
         }
 
         return inflate;
+    }
+
+    private void alertDialogWelcome() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View viewAlertDialog = layoutInflater.inflate(R.layout.custom_alertdialog, this.inflate.findViewById(R.id.alert_custom));
+        builder.setView(viewAlertDialog);
+        TextView titleAlertDialog = viewAlertDialog.findViewById(R.id.tvCustomAlertTitle);
+        TextView tvAlertDialog = viewAlertDialog.findViewById(R.id.tvCustomAlert);
+        titleAlertDialog.setText(R.string.bienvenido);
+        tvAlertDialog.setText(R.string.mensaje_bienvenido);
+        builder.setPositiveButton(R.string.continuar, null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @SuppressLint("SimpleDateFormat")

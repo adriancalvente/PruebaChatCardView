@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.activity;
+package com.herprogramacion.Viber.activity;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;

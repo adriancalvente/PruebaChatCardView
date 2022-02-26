@@ -1,10 +1,40 @@
 {
   "project_info": {
     "project_number": "1083613699550",
+    "firebase_url": "https://pruebachatcardview-default-rtdb.firebaseio.com",
     "project_id": "pruebachatcardview",
     "storage_bucket": "pruebachatcardview.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083613699550:android:1ba906fed0d6a68936914f",
+        "android_client_info": {
+          "package_name": "com.herprogramacion.Viber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083613699550-q11fq8ei7dm1ho38cv4d5ehodlcrec9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBco2FsDjbS_n-PoC4z9jQal6x6ZrtNlsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083613699550-q11fq8ei7dm1ho38cv4d5ehodlcrec9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:1083613699550:android:3e686f4198e6315136914f",

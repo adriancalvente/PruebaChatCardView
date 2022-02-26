@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.adapter;
+package com.herprogramacion.Viber.adapter;
 
 import android.util.Log;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.herprogramacion.pruebachatcardview.R;
+import com.herprogramacion.Viber.R;
 
 public class HolderMensaje extends RecyclerView.ViewHolder {
     private ConstraintLayout msg;

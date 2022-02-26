@@ -1,10 +1,10 @@
-package com.herprogramacion.pruebachatcardview.BBDD;
+package com.herprogramacion.Viber.BBDD;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.herprogramacion.pruebachatcardview.models.Mensaje;
-import com.herprogramacion.pruebachatcardview.models.Usuarios;
+import com.herprogramacion.Viber.models.Mensaje;
+import com.herprogramacion.Viber.models.Usuarios;
 
 @Database(entities = {Usuarios.class, Mensaje.class}, version = 1)
 public abstract class AppDataBase extends RoomDatabase {

@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.fragments;
+package com.herprogramacion.Viber.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -27,7 +26,7 @@ import com.chibde.visualizer.CircleVisualizer;
 import com.chibde.visualizer.LineBarVisualizer;
 import com.chibde.visualizer.LineVisualizer;
 import com.chibde.visualizer.SquareBarVisualizer;
-import com.herprogramacion.pruebachatcardview.R;
+import com.herprogramacion.Viber.R;
 
 import java.util.concurrent.TimeUnit;
 

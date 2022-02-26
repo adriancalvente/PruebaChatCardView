@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.threads;
+package com.herprogramacion.Viber.threads;
 
 import android.content.Context;
 import android.media.MediaPlayer;

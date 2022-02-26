@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.models;
+package com.herprogramacion.Viber.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

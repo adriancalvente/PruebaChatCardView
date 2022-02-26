@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PruebaChatCardView</string>
+    <string name="app_name">Viber</string>
     <string name="nombre_de_usuario">Username</string>
     <string name="introduce_contrasena">Insert password</string>
     <string name="registrar">Sing up</string>
     <string name="reproducir">Play</string>
     <string name="enviar">Send</string>
     <string name="iniciar_sesion">Log in</string>
+    <string name="bienvenido">WELCOME</string>
+    <string name="mensaje_bienvenido">Welcome to Adrián Calvente and Julián de Juan android final project.</string>
+    <string name="continuar">Continue</string>
 </resources>

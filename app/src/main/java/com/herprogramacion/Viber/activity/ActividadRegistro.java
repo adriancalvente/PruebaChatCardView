@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.activity;
+package com.herprogramacion.Viber.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import com.herprogramacion.pruebachatcardview.BBDD.AppDataBase;
-import com.herprogramacion.pruebachatcardview.R;
-import com.herprogramacion.pruebachatcardview.models.Usuarios;
+import com.herprogramacion.Viber.BBDD.AppDataBase;
+import com.herprogramacion.Viber.R;
+import com.herprogramacion.Viber.models.Usuarios;
 
 public class ActividadRegistro extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 200;
