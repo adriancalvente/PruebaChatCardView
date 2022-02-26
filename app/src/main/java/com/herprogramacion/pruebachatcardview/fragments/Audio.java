@@ -1,12 +1,9 @@
 package com.herprogramacion.pruebachatcardview.fragments;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,11 +33,12 @@ public class Audio extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    int repetir = 2, posicion = 0;
+    MediaPlayer[] vectormp;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button btnPLay_pause, btnRepetir, cambioEspectro, btnStop,btnSiguente,btnAnterior;
+    private Button btnPlay_pause, btnRepetir, cambioEspectro, btnStop, btnSiguente, btnAnterior;
     private MediaPlayer mp;
     private LineVisualizer lineVisualizer;
     private BarVisualizer barVisualizer;
@@ -48,10 +46,6 @@ public class Audio extends Fragment {
     private CircleVisualizer circleVisualizer;
     private SquareBarVisualizer squareBarVisualizer;
     private LineBarVisualizer lineBarVisualizer;
-    int repetir = 2, posicion = 0;
-    MediaPlayer[] vectormp;
-
-
     private int cont = 0;
 
     public Audio() {
@@ -112,104 +106,82 @@ public class Audio extends Fragment {
         vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
 
         btnStop = inflate.findViewById(R.id.btnStop);
-        btnPLay_pause = inflate.findViewById(R.id.play);
+        btnPlay_pause = inflate.findViewById(R.id.play);
         btnRepetir = inflate.findViewById(R.id.noRepetir);
         btnSiguente = inflate.findViewById(R.id.siguiente);
         btnAnterior = inflate.findViewById(R.id.anterior);
 
 
+        btnPlay_pause.setOnClickListener(view -> {
+            if (vectormp[posicion].isPlaying()) {
+                vectormp[posicion].pause();
+                btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
+            } else {
+                btnPlay_pause.setBackgroundResource(R.drawable.pausa);
+                objetosInvisibles();
+                localizarEspectro(inflate);
+                vectormp[posicion].start();
+            }
+        });
 
+        btnStop.setOnClickListener(view -> {
+            if (vectormp[posicion] != null) {
+                vectormp[posicion].stop();
+                vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
+                vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
+                vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
+                vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
+                vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
+                posicion = 0;
+                btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
+            }
+        });
 
-        btnPLay_pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnRepetir.setOnClickListener(view -> {
+            if (repetir == 1) {
+                btnRepetir.setBackgroundResource(R.drawable.no_repetir);
+                Toast.makeText(getContext(), "Repetición desactivada", Toast.LENGTH_SHORT).show();
+                vectormp[posicion].setLooping(false);
+                repetir = 2;
+            } else {
+                btnRepetir.setBackgroundResource(R.drawable.repetir);
+                Toast.makeText(getContext(), "Repetición Activada", Toast.LENGTH_SHORT).show();
+                vectormp[posicion].setLooping(true);
+                repetir = 1;
+            }
+
+        });
+
+        btnSiguente.setOnClickListener(view -> {
+            if (posicion < vectormp.length - 1) {
                 if (vectormp[posicion].isPlaying()) {
-                    vectormp[posicion].pause();
-                    btnPLay_pause.setBackgroundResource(R.drawable.reproducir);
-                } else {
+                    vectormp[posicion].stop();
+                    posicion++;
                     vectormp[posicion].start();
-                    btnPLay_pause.setBackgroundResource(R.drawable.pausa);
                     objetosInvisibles();
                     localizarEspectro(inflate);
-                }
-            }
-        });
-
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (vectormp[posicion] != null) {
-                    vectormp[posicion].stop();
-                    vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
-                    vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
-                    vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
-                    vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
-                    vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
-                    posicion = 0;
-                    btnPLay_pause.setBackgroundResource(R.drawable.reproducir);
-                }
-            }
-        });
-
-        btnRepetir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (repetir == 1) {
-                    btnRepetir.setBackgroundResource(R.drawable.no_repetir);
-                    Toast.makeText(getContext(),"Repetición desactivada",Toast.LENGTH_SHORT).show();
-                    vectormp[posicion].setLooping(false);
-                    repetir=2;
                 } else {
-                    btnRepetir.setBackgroundResource(R.drawable.repetir);
-                    Toast.makeText(getContext(),"Repetición Activada",Toast.LENGTH_SHORT).show();
-                    vectormp[posicion].setLooping(true);
-                    repetir=1;
+                    posicion++;
                 }
 
+            } else {
+                Toast.makeText(getContext(), "No hay mas canciones", Toast.LENGTH_SHORT).show();
             }
         });
 
-        btnSiguente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (posicion<vectormp.length-1){
-                    if (vectormp[posicion].isPlaying()){
-                        vectormp[posicion].stop();
-                        posicion++;
-                        vectormp[posicion].start();
-                        objetosInvisibles();
-                        localizarEspectro(inflate);
-                    }else{
-                        posicion++;
-                    }
-
-                }else{
-                    Toast.makeText(getContext(),"No hay mas canciones",Toast.LENGTH_SHORT).show();
+        btnAnterior.setOnClickListener(view -> {
+            if (posicion >= 1) {
+                if (vectormp[posicion].isPlaying()) {
+                    vectormp[posicion].stop();
+                    posicion--;
+                    vectormp[posicion].start();
+                    objetosInvisibles();
+                    localizarEspectro(inflate);
+                } else {
+                    posicion--;
                 }
-            }
-        });
-
-        btnAnterior.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (posicion>=1) {
-                    if (vectormp[posicion].isPlaying()){
-                        vectormp[posicion].stop();
-                        vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
-                        vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
-                        vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
-                        vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
-                        vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
-                        posicion--;
-                        vectormp[posicion].start();
-                        objetosInvisibles();
-                        localizarEspectro(inflate);
-                    }else{
-                        posicion--;
-                    }
-                }else{
-                    Toast.makeText(getContext(),"No hay mas canciones",Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                Toast.makeText(getContext(), "No hay mas canciones", Toast.LENGTH_SHORT).show();
             }
         });
         cambioEspectro.setOnClickListener(view -> {
@@ -229,13 +201,13 @@ public class Audio extends Fragment {
     private void localizarEspectro(View inflate) {
         switch (cont) {
             case 0:
+                lineVisualizer.release();
                 lineVisualizer.setVisibility(View.VISIBLE);
                 // set a custom color to the line.
-lineVisualizer.cancelDragAndDrop();
                 lineVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
                 break;
             case 1:
-
+                barVisualizer.release();
                 barVisualizer.setVisibility(View.VISIBLE);
                 // set the custom color to the line.
                 barVisualizer.setColor(ContextCompat.getColor(getContext(), R.color.espectro));
@@ -246,6 +218,7 @@ lineVisualizer.cancelDragAndDrop();
                 barVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
                 break;
             case 2:
+                circleBarVisualizer.release();
                 circleBarVisualizer.setVisibility(View.VISIBLE);
 
                 // set the custom color to the line.
@@ -255,6 +228,7 @@ lineVisualizer.cancelDragAndDrop();
                 circleBarVisualizer.setPlayer(vectormp[posicion].getAudioSessionId());
                 break;
             case 3:
+                circleVisualizer.release();
                 circleVisualizer.setVisibility(View.VISIBLE);
 
                 // set custom color to the line.
