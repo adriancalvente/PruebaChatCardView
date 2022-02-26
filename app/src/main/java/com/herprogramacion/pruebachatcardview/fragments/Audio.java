@@ -1,6 +1,8 @@
 package com.herprogramacion.pruebachatcardview.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -140,11 +142,13 @@ public class Audio extends Fragment {
         btnRepetir.setOnClickListener(view -> {
             if (repetir == 1) {
                 btnRepetir.setBackgroundResource(R.drawable.no_repetir);
+                btnRepetir.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                 Toast.makeText(getContext(), "Repetición desactivada", Toast.LENGTH_SHORT).show();
                 vectormp[posicion].setLooping(false);
                 repetir = 2;
             } else {
                 btnRepetir.setBackgroundResource(R.drawable.repetir);
+                btnRepetir.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#BE0527")));
                 Toast.makeText(getContext(), "Repetición Activada", Toast.LENGTH_SHORT).show();
                 vectormp[posicion].setLooping(true);
                 repetir = 1;
@@ -170,7 +174,7 @@ public class Audio extends Fragment {
         });
 
         btnAnterior.setOnClickListener(view -> {
-            if (posicion >= 1) {
+            if (posicion >= 0) {
                 if (vectormp[posicion].isPlaying()) {
                     vectormp[posicion].stop();
                     posicion--;
@@ -179,6 +183,9 @@ public class Audio extends Fragment {
                     localizarEspectro(inflate);
                 } else {
                     posicion--;
+                    vectormp[posicion].start();
+                    objetosInvisibles();
+                    localizarEspectro(inflate);
                 }
             } else {
                 Toast.makeText(getContext(), "No hay mas canciones", Toast.LENGTH_SHORT).show();
