@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -49,6 +50,7 @@ public class Audio extends Fragment {
     private SquareBarVisualizer squareBarVisualizer;
     private LineBarVisualizer lineBarVisualizer;
     private int cont = 0;
+    private Toast customToast;
 
     public Audio() {
         // Required empty public constructor
@@ -88,6 +90,12 @@ public class Audio extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_audio, container, false);
         mp = MediaPlayer.create(getActivity(), R.raw.video);
+        LayoutInflater inflaterCustom = getLayoutInflater();
+        View toastView = inflaterCustom.inflate(R.layout.custom_toast, inflate.findViewById(R.id.toast_custom));
+        TextView textToast = toastView.findViewById(R.id.tvCustomToast);
+        textToast.setText("No hay mas canciones");
+        customToast = new Toast(getContext());
+        customToast.setView(toastView);
 
         cambioEspectro = inflate.findViewById(R.id.cambioEspectro);
         lineVisualizer = inflate.findViewById(R.id.visualizerLine);
@@ -169,7 +177,7 @@ public class Audio extends Fragment {
                 }
 
             } else {
-                Toast.makeText(getContext(), "No hay mas canciones", Toast.LENGTH_SHORT).show();
+                customToast.show();
             }
         });
 
@@ -195,7 +203,7 @@ public class Audio extends Fragment {
                     vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
                 }
             } else {
-                Toast.makeText(getContext(), "No hay mas canciones", Toast.LENGTH_SHORT).show();
+                customToast.show();
             }
         });
         cambioEspectro.setOnClickListener(view -> {
