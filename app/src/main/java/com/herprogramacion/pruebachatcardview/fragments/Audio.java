@@ -174,18 +174,21 @@ public class Audio extends Fragment {
         });
 
         btnAnterior.setOnClickListener(view -> {
-            if (posicion >= 0) {
+            if (posicion >= 1) {
                 if (vectormp[posicion].isPlaying()) {
                     vectormp[posicion].stop();
+                    vectormp[0] = MediaPlayer.create(getContext(), R.raw.estopa);
+                    vectormp[1] = MediaPlayer.create(getContext(), R.raw.quiereme);
+                    vectormp[2] = MediaPlayer.create(getContext(), R.raw.badbunny);
+                    vectormp[3] = MediaPlayer.create(getContext(), R.raw.joaquinsabina);
+                    vectormp[4] = MediaPlayer.create(getContext(), R.raw.chunguitos);
                     posicion--;
                     vectormp[posicion].start();
                     objetosInvisibles();
                     localizarEspectro(inflate);
                 } else {
                     posicion--;
-                    vectormp[posicion].start();
-                    objetosInvisibles();
-                    localizarEspectro(inflate);
+
                 }
             } else {
                 Toast.makeText(getContext(), "No hay mas canciones", Toast.LENGTH_SHORT).show();
