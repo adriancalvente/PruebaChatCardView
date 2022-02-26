@@ -128,13 +128,9 @@ public class Chat extends Fragment {
                 public void onChildAdded(@NonNull DataSnapshot snapshot, String previousChildName) {
                     Mensaje m = snapshot.getValue(Mensaje.class);
                     assert m != null;
-                    if (m.getId().equals(id)) {
+
                         adapter.addMensaje(m);
-                    } else if (!m.getId().equals(id)) {
-                        m.setMensaje(m.getUsuario() + ": " + m.getMensaje());
-                        m.setPosicion(1);
-                        adapter.addMensaje(m);
-                    }
+
 
 
                 }

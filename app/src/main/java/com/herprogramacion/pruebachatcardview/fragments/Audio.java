@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -41,6 +44,7 @@ public class Audio extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     int repetir = 2, posicion = 0;
     MediaPlayer[] vectormp;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -99,9 +103,11 @@ public class Audio extends Fragment {
         LayoutInflater inflaterCustom = getLayoutInflater();
         View toastView = inflaterCustom.inflate(R.layout.custom_toast, inflate.findViewById(R.id.toast_custom));
         TextView textToast = toastView.findViewById(R.id.tvCustomToast);
+        final Animation myAnim = AnimationUtils.loadAnimation(getContext(),R.anim.rebote);
         textToast.setText("No hay mas canciones");
         customToast = new Toast(getContext());
         customToast.setView(toastView);
+
         totalCancion = inflate.findViewById(R.id.TotalCancion);
         progresoCancion = inflate.findViewById(R.id.cambioTiempo);
 
@@ -125,9 +131,8 @@ public class Audio extends Fragment {
         btnRepetir = inflate.findViewById(R.id.noRepetir);
         btnSiguente = inflate.findViewById(R.id.siguiente);
         btnAnterior = inflate.findViewById(R.id.anterior);
-
-
         btnPlay_pause.setOnClickListener(view -> {
+            btnPlay_pause.startAnimation(myAnim);
             if (vectormp[posicion].isPlaying()) {
                 vectormp[posicion].pause();
                 btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
@@ -163,6 +168,7 @@ public class Audio extends Fragment {
 
         btnStop.setOnClickListener(view -> {
             if (vectormp[posicion] != null) {
+                btnStop.startAnimation(myAnim);
                 vectormp[posicion].stop();
                 setCanciones();
                 posicion = 0;
@@ -171,6 +177,7 @@ public class Audio extends Fragment {
         });
 
         btnRepetir.setOnClickListener(view -> {
+            btnRepetir.startAnimation(myAnim);
             if (repetir == 1) {
                 btnRepetir.setBackgroundResource(R.drawable.no_repetir);
                 btnRepetir.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
@@ -188,6 +195,7 @@ public class Audio extends Fragment {
         });
 
         btnSiguente.setOnClickListener(view -> {
+            btnSiguente.startAnimation(myAnim);
             if (posicion < vectormp.length - 1) {
                 if (vectormp[posicion].isPlaying()) {
                     vectormp[posicion].stop();
@@ -205,6 +213,7 @@ public class Audio extends Fragment {
         });
 
         btnAnterior.setOnClickListener(view -> {
+            btnAnterior.startAnimation(myAnim);
             if (posicion >= 1) {
                 if (vectormp[posicion].isPlaying()) {
                     vectormp[posicion].stop();
