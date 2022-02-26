@@ -47,7 +47,7 @@
           android:backgroundTint="@android:color/transparent"
           android:ems="10"
           android:fontFamily="@font/roboto_condensed_bold"
-          android:hint="Nombre de Usuario"
+          android:hint="@string/nombre_de_usuario"
           android:inputType="textPersonName"
           android:textColor="#FFFFFF"
           android:textColorHint="#FFFFFF"
@@ -90,7 +90,7 @@
           android:backgroundTint="@android:color/transparent"
           android:ems="10"
           android:fontFamily="@font/roboto_condensed_bold"
-          android:hint="Introduce contraseña"
+          android:hint="@string/introduce_contrasena"
           android:inputType="textPassword"
           android:textColor="#FFFFFF"
           android:textColorHint="#FFFFFF"
@@ -108,7 +108,7 @@
         android:layout_height="59dp"
         android:layout_marginTop="44dp"
         android:onClick="onClick"
-        android:text="Iniciar Sesion"
+        android:text="@string/iniciar_sesion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +121,7 @@
         android:layout_height="62dp"
         android:layout_marginTop="24dp"
         android:onClick="onClick"
-        android:text="Registrar"
+        android:text="@string/registrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
@@ -131,10 +131,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/logoLoggin"
         android:layout_width="363dp"
-        android:layout_height="0dp"
+        android:layout_height="103dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="200dp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -149,7 +147,7 @@
           android:background="@drawable/bordes"
           android:fontFamily="@font/roboto_condensed_bold"
           android:gravity="center"
-          android:text="INICIAR SESION"
+          android:text="@string/iniciar_sesion"
           android:textColor="#FFFFFF"
           android:textSize="24sp"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -179,6 +177,20 @@
           app:srcCompat="@drawable/iconuser" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="45dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="291dp"
+        android:layout_marginTop="113dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistrar"
+        app:srcCompat="@mipmap/flag" />
 
     <ProgressBar
         android:id="@+id/progressBar"

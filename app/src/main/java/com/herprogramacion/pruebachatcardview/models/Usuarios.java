@@ -1,4 +1,4 @@
-package com.herprogramacion.pruebachatcardview.BBDD;
+package com.herprogramacion.pruebachatcardview.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

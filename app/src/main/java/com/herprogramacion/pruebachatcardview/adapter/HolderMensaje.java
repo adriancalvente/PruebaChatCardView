@@ -1,10 +1,9 @@
 package com.herprogramacion.pruebachatcardview.adapter;
 
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,14 +16,19 @@ public class HolderMensaje extends RecyclerView.ViewHolder {
     private TextView mensajeizq;
     private TextView tiempoDrch;
     private TextView tiempoIzq;
+
     public HolderMensaje(View itemView) {
         super(itemView);
-        mensaje = (TextView) itemView.findViewById(R.id.mensaje);
-        mensajeizq=(TextView) itemView.findViewById(R.id.mensajeizq);
-        msg = (ConstraintLayout) itemView.findViewById(R.id.msgDrch);
-        msgIzq = (ConstraintLayout) itemView.findViewById(R.id.msgIzq);
-        tiempoDrch = (TextView) itemView.findViewById(R.id.tiempoDrch);
-        tiempoIzq = (TextView) itemView.findViewById(R.id.tiempoIzq);
+        try {
+            mensaje = itemView.findViewById(R.id.mensaje);
+            mensajeizq = itemView.findViewById(R.id.mensajeizq);
+            msg = itemView.findViewById(R.id.msgDrch);
+            msgIzq = itemView.findViewById(R.id.msgIzq);
+            tiempoDrch = itemView.findViewById(R.id.tiempoDrch);
+            tiempoIzq = itemView.findViewById(R.id.tiempoIzq);
+        } catch (Exception e) {
+            Log.e("unexpected", "Unexpected error");
+        }
     }
 
     public ConstraintLayout getMsg() {

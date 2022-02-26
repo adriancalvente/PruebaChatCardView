@@ -2,23 +2,27 @@ package com.herprogramacion.pruebachatcardview.threads;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
-
-import com.herprogramacion.pruebachatcardview.R;
 
 public class MediaThread extends Thread {
     private VideoView videoView;
     private MediaPlayer mediaPlayer;
     private MediaController mediaController;
-    private boolean exit = false;
+    private final boolean exit = false;
 
     public MediaThread(Context context, int resource, VideoView videoView) {
-        this.videoView = videoView;
-        this.videoView.setVideoPath("android.resource://" + context.getPackageName() + "/" + resource);
-        mediaController = new MediaController(context);
-        this.videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
+        try {
+
+            this.videoView = videoView;
+            this.videoView.setVideoPath("android.resource://" + context.getPackageName() + "/" + resource);
+            mediaController = new MediaController(context);
+            this.videoView.setMediaController(mediaController);
+            mediaController.setAnchorView(videoView);
+        } catch (Exception e) {
+            Log.e("unexpected", "Unexpected error");
+        }
     }
 
     public MediaThread(Context context, int resource) {
@@ -27,14 +31,19 @@ public class MediaThread extends Thread {
 
     @Override
     public void run() {
-        if (videoView == null) {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
+        try {
+
+            if (videoView == null) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                } else {
+                    mediaPlayer.start();
+                }
             } else {
-                mediaPlayer.start();
+                videoView.setOnPreparedListener(mediaPlayer1 -> videoView.start());
             }
-        } else {
-            videoView.setOnPreparedListener(mediaPlayer1 -> videoView.start());
+        } catch (Exception e) {
+            Log.e("unexpected", "Unexpected error");
         }
     }
 
