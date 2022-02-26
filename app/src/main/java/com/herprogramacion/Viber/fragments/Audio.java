@@ -28,6 +28,7 @@ import com.chibde.visualizer.LineVisualizer;
 import com.chibde.visualizer.SquareBarVisualizer;
 import com.herprogramacion.Viber.R;
 
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -99,6 +100,11 @@ public class Audio extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_audio, container, false);
         declararObjetos(inflate);
+        Executors.newSingleThreadExecutor().submit(this::declararListeners);
+        return inflate;
+    }
+
+    private void declararListeners() {
         btnPlay_pause.setOnClickListener(view -> {
             btnPlay_pause.startAnimation(myAnim);
             if (vectormp[posicion].isPlaying()) {
@@ -142,7 +148,7 @@ public class Audio extends Fragment {
             btnSiguente.startAnimation(myAnim);
             if (posicion < vectormp.length - 1) {
                 if (vectormp[posicion].isPlaying()) {
-                    reproducirSiguinteCancion();
+                    reproducirSiguienteCancion();
                     objetosInvisibles();
                     localizarEspectro();
                 } else {
@@ -196,16 +202,19 @@ public class Audio extends Fragment {
                 vectormp[posicion].seekTo(seekBar.getProgress());
             }
         });
-        return inflate;
     }
 
-    private void reproducirSiguinteCancion() {
-        vectormp[posicion].stop();
-        posicion++;
-        vectormp[posicion].start();
-        String endTime = formatDuration(vectormp[posicion].getDuration());
-        seekBar.setMax(vectormp[posicion].getDuration());
-        totalCancion.setText(endTime);
+    private void reproducirSiguienteCancion() {
+        if (posicion < vectormp.length - 1) {
+            vectormp[posicion].stop();
+            posicion++;
+            vectormp[posicion].start();
+            String endTime = formatDuration(vectormp[posicion].getDuration());
+            seekBar.setMax(vectormp[posicion].getDuration());
+            totalCancion.setText(endTime);
+        } else {
+            customToast.show();
+        }
     }
 
     private void reproducirMusica() {
@@ -217,7 +226,8 @@ public class Audio extends Fragment {
     }
 
     private void iniciarHilo() {
-        new Thread(() -> {
+        Executors.newSingleThreadExecutor().submit(() -> {
+            seekBar.releasePointerCapture();
             int totalDuracion = vectormp[posicion].getDuration();
             String progressSong;
             int currentPosicion = 0;
@@ -230,13 +240,13 @@ public class Audio extends Fragment {
                 progresoCancion.setText(progressSong);
                 seekBar.setProgress(currentPosicion);
                 if (progressSong.equals(totalCancion.getText().toString())) {
-                    reproducirSiguinteCancion();
+                    reproducirSiguienteCancion();
                     localizarEspectro();
                 }
 
             }
 
-        }).start();
+        });
     }
 
     private void declararObjetos(View inflate) {
