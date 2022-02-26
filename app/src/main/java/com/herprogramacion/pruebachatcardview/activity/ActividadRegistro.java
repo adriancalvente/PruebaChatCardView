@@ -30,9 +30,7 @@ public class ActividadRegistro extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         try {
             int permisoAudio = checkSelfPermission(Manifest.permission.RECORD_AUDIO);
-            if (permisoAudio == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permiso concedido", Toast.LENGTH_SHORT).show();
-            } else {
+            if (permisoAudio == PackageManager.PERMISSION_DENIED) {
                 requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_CODE);
             }
             super.onCreate(savedInstanceState);
