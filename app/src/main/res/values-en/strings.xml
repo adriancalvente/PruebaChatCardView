@@ -7,4 +7,7 @@
     <string name="reproducir">Play</string>
     <string name="enviar">Send</string>
     <string name="iniciar_sesion">Log in</string>
+    <string name="bienvenido">WELCOME</string>
+    <string name="mensaje_bienvenido">Welcome to Adrián Calvente and Julián de Juan android final project.</string>
+    <string name="continuar">Continue</string>
 </resources>

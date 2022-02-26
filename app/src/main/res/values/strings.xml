@@ -7,4 +7,7 @@
     <string name="reproducir">reproducir</string>
     <string name="enviar">Enviar</string>
     <string name="iniciar_sesion">INICIAR SESION</string>
+    <string name="bienvenido">BIENVENIDO</string>
+    <string name="mensaje_bienvenido">Bienvenido al trabajo final de android de Adrián Calvente y Julián de Juan</string>
+    <string name="continuar">Continuar</string>
 </resources>

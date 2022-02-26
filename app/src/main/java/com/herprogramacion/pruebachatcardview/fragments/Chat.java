@@ -1,6 +1,7 @@
 package com.herprogramacion.pruebachatcardview.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -91,8 +94,8 @@ public class Chat extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         try {
-
             inflate = inflater.inflate(R.layout.fragment_chat, container, false);
+            alertDialogWelcome();
             // Inflate the layout for this fragment
             id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
             try {
@@ -164,6 +167,20 @@ public class Chat extends Fragment {
         }
 
         return inflate;
+    }
+
+    private void alertDialogWelcome() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View viewAlertDialog = layoutInflater.inflate(R.layout.custom_alertdialog, this.inflate.findViewById(R.id.alert_custom));
+        builder.setView(viewAlertDialog);
+        TextView titleAlertDialog = viewAlertDialog.findViewById(R.id.tvCustomAlertTitle);
+        TextView tvAlertDialog = viewAlertDialog.findViewById(R.id.tvCustomAlert);
+        titleAlertDialog.setText(R.string.bienvenido);
+        tvAlertDialog.setText(R.string.mensaje_bienvenido);
+        builder.setPositiveButton(R.string.continuar, null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @SuppressLint("SimpleDateFormat")
