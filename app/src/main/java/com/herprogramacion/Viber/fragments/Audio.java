@@ -120,11 +120,7 @@ public class Audio extends Fragment {
         });
         btnStop.setOnClickListener(view -> {
             if (vectormp[posicion] != null) {
-                btnStop.startAnimation(myAnim);
-                vectormp[posicion].stop();
-                setCanciones();
-                posicion = 0;
-                btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
+                stopMusica();
             }
         });
         btnRepetir.setOnClickListener(view -> {
@@ -206,7 +202,16 @@ public class Audio extends Fragment {
         return inflate;
     }
 
-    private void updateSeekBar(boolean parar) {
+    private void stopMusica() {
+        btnStop.startAnimation(myAnim);
+        vectormp[posicion].stop();
+        setCanciones();
+        posicion = 0;
+        btnPlay_pause.setBackgroundResource(R.drawable.reproducir);
+    }
+
+    private void updateSeekBar() {
+
         int currpos = vectormp[posicion].getCurrentPosition();
         String endTime = formatDuration(vectormp[posicion].getDuration());
         totalCancion.setText(endTime);
@@ -214,32 +219,30 @@ public class Audio extends Fragment {
         String progressSong = formatDuration(currpos);
         progresoCancion.setText(progressSong);
         seekBar.setProgress(currpos);
-        System.out.println(parar);
-        if (!parar){
         if ((vectormp[posicion].getDuration()-200)<=currpos) {
             reproducirSiguinteCancion();
         }
         runnable=new Runnable() {
             @Override
             public void run() {
-                updateSeekBar(false);
+
+                    updateSeekBar();
+
             }
         };
-        }
-        handler.postDelayed(runnable, 1000);
 
-    }
+        handler.postDelayed(runnable, 1000);
+        }
+
 
     private void reproducirSiguinteCancion() {
-        System.out.println(posicion+"   "+(vectormp.length - 1));
         if (posicion < vectormp.length - 1) {
             vectormp[posicion].stop();
             posicion++;
             reproducirMusica();
         }else{
-            updateSeekBar(true);
            Toast.makeText(getContext(),"No hay mas canciones",Toast.LENGTH_SHORT).show();
-
+            stopMusica();
         }
     }
 
@@ -248,7 +251,7 @@ public class Audio extends Fragment {
         vectormp[posicion].start();
         objetosInvisibles();
         localizarEspectro();
-        updateSeekBar(parar);
+        updateSeekBar();
     }
 
 
