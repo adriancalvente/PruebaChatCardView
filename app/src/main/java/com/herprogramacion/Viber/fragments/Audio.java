@@ -66,7 +66,7 @@ public class Audio extends Fragment {
     private TextView progresoCancion;
     private int cont = 0;
     private Toast customToast;
-
+    private boolean parar;
 
 
     public Audio() {
@@ -206,7 +206,7 @@ public class Audio extends Fragment {
         return inflate;
     }
 
-    private void updateSeekBar() {
+    private void updateSeekBar(boolean parar) {
         int currpos = vectormp[posicion].getCurrentPosition();
         String endTime = formatDuration(vectormp[posicion].getDuration());
         totalCancion.setText(endTime);
@@ -214,29 +214,32 @@ public class Audio extends Fragment {
         String progressSong = formatDuration(currpos);
         progresoCancion.setText(progressSong);
         seekBar.setProgress(currpos);
-        System.out.println((vectormp[posicion].getDuration()-100)+"    "+currpos);
-        if ((vectormp[posicion].getDuration()-100)<=currpos) {
+        System.out.println(parar);
+        if (!parar){
+        if ((vectormp[posicion].getDuration()-200)<=currpos) {
             reproducirSiguinteCancion();
         }
         runnable=new Runnable() {
             @Override
             public void run() {
-                updateSeekBar();
-
+                updateSeekBar(false);
             }
         };
+        }
         handler.postDelayed(runnable, 1000);
 
     }
 
     private void reproducirSiguinteCancion() {
+        System.out.println(posicion+"   "+(vectormp.length - 1));
         if (posicion < vectormp.length - 1) {
             vectormp[posicion].stop();
             posicion++;
             reproducirMusica();
         }else{
-            customToast.setText("No hay mas canciones");
-            customToast.show();
+            updateSeekBar(true);
+           Toast.makeText(getContext(),"No hay mas canciones",Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -245,7 +248,7 @@ public class Audio extends Fragment {
         vectormp[posicion].start();
         objetosInvisibles();
         localizarEspectro();
-        updateSeekBar();
+        updateSeekBar(parar);
     }
 
 
@@ -275,6 +278,7 @@ public class Audio extends Fragment {
         btnRepetir = inflate.findViewById(R.id.noRepetir);
         btnSiguente = inflate.findViewById(R.id.siguiente);
         btnAnterior = inflate.findViewById(R.id.anterior);
+        parar=false;
     }
 
     @SuppressLint("DefaultLocale")
