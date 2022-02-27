@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#9C906D"
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
@@ -10,8 +11,9 @@
         android:id="@+id/rvMensajes"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_weight="1"
+        android:background="#9C906D"></androidx.recyclerview.widget.RecyclerView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,9 +21,10 @@
 
         <EditText
             android:id="@+id/txtMensaje"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="322dp"
+            android:layout_height="38dp"
             android:layout_weight="1"
+            android:backgroundTint="#F4F4F4"
             android:hint="@string/escribe_un_mensaje"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 

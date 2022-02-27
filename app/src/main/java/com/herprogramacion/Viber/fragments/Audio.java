@@ -2,9 +2,14 @@ package com.herprogramacion.Viber.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +24,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -66,7 +72,6 @@ public class Audio extends Fragment {
     private TextView progresoCancion;
     private int cont = 0;
     private Toast customToast;
-    private boolean parar;
 
 
     public Audio() {
@@ -254,6 +259,7 @@ public class Audio extends Fragment {
     }
 
 
+    @SuppressLint("SdCardPath")
     private void declararObjetos(View inflate) {
         LayoutInflater inflaterCustom = getLayoutInflater();
         View toastView = inflaterCustom.inflate(R.layout.custom_toast, inflate.findViewById(R.id.toast_custom));
@@ -280,7 +286,16 @@ public class Audio extends Fragment {
         btnRepetir = inflate.findViewById(R.id.noRepetir);
         btnSiguente = inflate.findViewById(R.id.siguiente);
         btnAnterior = inflate.findViewById(R.id.anterior);
-        parar=false;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("¿Dónde desea reproducir la música?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Reproductor interno",(dialogInterface, i) -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.parse("/sdcard/Music/badbunny.mp3"),"audio/mp3");
+            startActivity(intent);
+        }).setNegativeButton("Reproductor externo", (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+        }).show();
     }
 
     @SuppressLint("DefaultLocale")

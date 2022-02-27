@@ -1,5 +1,9 @@
 package com.herprogramacion.Viber.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,15 +64,27 @@ public class Video extends Fragment {
         }
     }
 
+    @SuppressLint("SdCardPath")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View inflate = inflater.inflate(R.layout.fragment_video, container, false);
         try {
+            AlertDialog.Builder a = new AlertDialog.Builder(getContext());
+            a.setTitle("¿Dónde desea reproducir la música?");
+            a.setCancelable(false);
+            a.setPositiveButton("Reproductor interno",(dialogInterface, i) -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("/sdcard/Movies/video.mp4"),"video/mp4");
+                startActivity(intent);
+            }).setNegativeButton("Reproductor externo", (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                videoView = inflate.findViewById(R.id.videoView);
+                MediaThread mediaThread = new MediaThread(getContext(), R.raw.video, videoView);
+                mediaThread.start();
+            }).show();
 
-            View inflate = inflater.inflate(R.layout.fragment_video, container, false);
-            videoView = inflate.findViewById(R.id.videoView);
-            MediaThread mediaThread = new MediaThread(getContext(), R.raw.video, videoView);
-            mediaThread.start();
+
             return inflate;
         } catch (Exception e) {
             Log.e("unexpected", "Unexpected error");
