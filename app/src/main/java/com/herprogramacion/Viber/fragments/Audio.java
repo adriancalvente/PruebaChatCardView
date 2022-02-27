@@ -211,7 +211,6 @@ public class Audio extends Fragment {
     }
 
     private void updateSeekBar() {
-
         int currpos = vectormp[posicion].getCurrentPosition();
         String endTime = formatDuration(vectormp[posicion].getDuration());
         totalCancion.setText(endTime);
