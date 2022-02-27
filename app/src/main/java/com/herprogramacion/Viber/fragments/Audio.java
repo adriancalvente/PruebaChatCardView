@@ -72,6 +72,7 @@ public class Audio extends Fragment {
     private TextView progresoCancion;
     private int cont = 0;
     private Toast customToast;
+    private Button reproductrInterno;
 
 
     public Audio() {
@@ -106,7 +107,7 @@ public class Audio extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.S)
-    @SuppressLint("ResourceType")
+    @SuppressLint({"ResourceType", "SdCardPath"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -179,6 +180,12 @@ public class Audio extends Fragment {
             } else {
                 customToast.show();
             }
+        });
+        reproductrInterno.setOnClickListener(view -> {
+            stopMusica();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.parse("/sdcard/Music/badbunny.mp3"),"audio/mp3");
+            startActivity(intent);
         });
         cambioEspectro.setOnClickListener(view -> {
             if (cont == 5) {
@@ -278,6 +285,7 @@ public class Audio extends Fragment {
         circleBarVisualizer = inflate.findViewById(R.id.visualizerCircleBar);
         circleVisualizer = inflate.findViewById(R.id.visualizerCircle);
         lineBarVisualizer = inflate.findViewById(R.id.visualizerLineBar);
+        reproductrInterno = inflate.findViewById(R.id.btnReproductorInterno);
         vectormp = new MediaPlayer[5];
         handler = new Handler();
         setCanciones();
@@ -286,16 +294,6 @@ public class Audio extends Fragment {
         btnRepetir = inflate.findViewById(R.id.noRepetir);
         btnSiguente = inflate.findViewById(R.id.siguiente);
         btnAnterior = inflate.findViewById(R.id.anterior);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("¿Dónde desea reproducir la música?");
-        builder.setCancelable(false);
-        builder.setPositiveButton("Reproductor interno",(dialogInterface, i) -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.parse("/sdcard/Music/badbunny.mp3"),"audio/mp3");
-            startActivity(intent);
-        }).setNegativeButton("Reproductor externo", (dialogInterface, i) -> {
-            dialogInterface.dismiss();
-        }).show();
     }
 
     @SuppressLint("DefaultLocale")

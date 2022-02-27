@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.VideoView;
 
 import androidx.fragment.app.Fragment;
@@ -32,6 +33,7 @@ public class Video extends Fragment {
     private String mParam1;
     private String mParam2;
     private VideoView videoView;
+    private Button reproductorVideoInterno;
 
     public Video() {
         // Required empty public constructor
@@ -69,24 +71,24 @@ public class Video extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_video, container, false);
+
         try {
-            AlertDialog.Builder a = new AlertDialog.Builder(getContext());
-            a.setTitle("¿Dónde desea reproducir la música?");
-            a.setCancelable(false);
-            a.setPositiveButton("Reproductor interno",(dialogInterface, i) -> {
+            reproductorVideoInterno = inflate.findViewById(R.id.btnRproductorInternoVideo);
+
+
+            videoView = inflate.findViewById(R.id.videoView);
+            MediaThread mediaThread = new MediaThread(getContext(), R.raw.video, videoView);
+            mediaThread.start();
+            reproductorVideoInterno.setOnClickListener(view -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse("/sdcard/Movies/video.mp4"),"video/mp4");
                 startActivity(intent);
-            }).setNegativeButton("Reproductor externo", (dialogInterface, i) -> {
-                dialogInterface.dismiss();
-                videoView = inflate.findViewById(R.id.videoView);
-                MediaThread mediaThread = new MediaThread(getContext(), R.raw.video, videoView);
-                mediaThread.start();
-            }).show();
-
+            });
 
             return inflate;
         } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
             Log.e("unexpected", "Unexpected error");
             return null;
         }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#9C906D"
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
@@ -12,27 +13,35 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#9C906D"></androidx.recyclerview.widget.RecyclerView>
+        android:background="#9C906D">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="#9C906D"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
 
         <EditText
             android:id="@+id/txtMensaje"
             android:layout_width="322dp"
             android:layout_height="38dp"
             android:layout_weight="1"
-            android:backgroundTint="#F4F4F4"
+            android:background="@drawable/textview"
             android:hint="@string/escribe_un_mensaje"
+            android:layout_margin="3dp"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
         <Button
             android:id="@+id/btnEnviar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/enviar" />
+            android:layout_width="54dp"
+            android:layout_height="38dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/semiluna"
+            android:foreground="@mipmap/enviarrr_foreground"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
     </LinearLayout>
 </LinearLayout>

@@ -182,4 +182,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barraMusica"
         app:layout_constraintTop_toBottomOf="@+id/visualizerLine" />
+
+    <Button
+        android:id="@+id/btnReproductorInterno"
+        android:layout_width="57dp"
+        android:layout_height="56dp"
+        android:background="@drawable/altavoces"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/play"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

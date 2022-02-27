@@ -109,10 +109,11 @@ public class Chat extends Fragment {
                 System.out.println(MainActivity.strUsuario);
                 Date date = new Date();
                 Mensaje mensaje = new Mensaje(MainActivity.strUsuario, txtMensaje.getText().toString(), 0, id, dateFormat.format(date));
-                db.mensajesDao().insert(mensaje);
-                databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(mensaje);
-                txtMensaje.setText("");
-
+                if (!mensaje.getMensaje().isEmpty()) {
+                    db.mensajesDao().insert(mensaje);
+                    databaseReference.child(String.valueOf(adapter.getItemCount())).setValue(mensaje);
+                    txtMensaje.setText("");
+                }
             });
 
 

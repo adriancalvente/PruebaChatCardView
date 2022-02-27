@@ -1,8 +1,11 @@
 package com.herprogramacion.Viber.threads;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
@@ -20,6 +23,7 @@ public class MediaThread extends Thread {
             mediaController = new MediaController(context);
             this.videoView.setMediaController(mediaController);
             mediaController.setAnchorView(videoView);
+
         } catch (Exception e) {
             Log.e("unexpected", "Unexpected error");
         }
@@ -31,8 +35,8 @@ public class MediaThread extends Thread {
 
     @Override
     public void run() {
-        try {
 
+        try {
             if (videoView == null) {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
