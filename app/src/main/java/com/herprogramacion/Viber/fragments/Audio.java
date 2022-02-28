@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,14 +66,14 @@ public class Audio extends Fragment {
     private SquareBarVisualizer squareBarVisualizer;
     private LineBarVisualizer lineBarVisualizer;
     private SeekBar seekBar;
-    Animation myAnim;
+    Animation myAnim, rotacion,rotacionIzquierda;
+    private ImageView notaMusical;
     Runnable runnable;
     Handler handler;
     private TextView totalCancion;
     private TextView progresoCancion;
     private int cont = 0;
     private Toast customToast;
-    private Button reproductrInterno;
 
 
     public Audio() {
@@ -157,7 +158,6 @@ public class Audio extends Fragment {
                 } else {
                     posicion++;
                 }
-
             } else {
                 customToast.show();
             }
@@ -170,6 +170,7 @@ public class Audio extends Fragment {
                     vectormp[posicion].stop();
                     setCanciones();
                     posicion--;
+                    notaMusical.startAnimation(rotacionIzquierda);
                     vectormp[posicion].start();
                     objetosInvisibles();
                     localizarEspectro();
@@ -181,12 +182,7 @@ public class Audio extends Fragment {
                 customToast.show();
             }
         });
-        reproductrInterno.setOnClickListener(view -> {
-            stopMusica();
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.parse("/sdcard/Music/badbunny.mp3"),"audio/mp3");
-            startActivity(intent);
-        });
+
         cambioEspectro.setOnClickListener(view -> {
             if (cont == 5) {
                 cont = 0;
@@ -249,8 +245,11 @@ public class Audio extends Fragment {
     private void reproducirSiguinteCancion() {
         if (posicion < vectormp.length - 1) {
             vectormp[posicion].stop();
+            notaMusical.startAnimation(rotacion);
             posicion++;
+
             reproducirMusica();
+
         }else{
            Toast.makeText(getContext(),"No hay mas canciones",Toast.LENGTH_SHORT).show();
             stopMusica();
@@ -272,6 +271,8 @@ public class Audio extends Fragment {
         View toastView = inflaterCustom.inflate(R.layout.custom_toast, inflate.findViewById(R.id.toast_custom));
         TextView textToast = toastView.findViewById(R.id.tvCustomToast);
         myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.rebote);
+        rotacion = AnimationUtils.loadAnimation(getContext(), R.anim.rotacion_derecha);
+        rotacionIzquierda= AnimationUtils.loadAnimation(getContext(), R.anim.rotacion_izquierda);
         textToast.setText("No hay mas canciones");
         customToast = new Toast(getContext());
         customToast.setView(toastView);
@@ -285,9 +286,10 @@ public class Audio extends Fragment {
         circleBarVisualizer = inflate.findViewById(R.id.visualizerCircleBar);
         circleVisualizer = inflate.findViewById(R.id.visualizerCircle);
         lineBarVisualizer = inflate.findViewById(R.id.visualizerLineBar);
-        reproductrInterno = inflate.findViewById(R.id.btnReproductorInterno);
         vectormp = new MediaPlayer[5];
         handler = new Handler();
+        notaMusical = inflate.findViewById(R.id.notaMusical);
+
         setCanciones();
         btnStop = inflate.findViewById(R.id.btnStop);
         btnPlay_pause = inflate.findViewById(R.id.play);

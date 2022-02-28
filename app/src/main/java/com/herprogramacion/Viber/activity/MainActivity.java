@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.herprogramacion.Viber.R;
 import com.herprogramacion.Viber.adapter.PagerAdapter;
 import com.herprogramacion.Viber.fragments.Chat;
-import com.herprogramacion.Viber.fragments.Video;
 
 public class MainActivity extends AppCompatActivity {
     public static String strUsuario;
@@ -24,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private FragmentManager fragmentManager;
     private Chat fragmentChat;
-    private Video fragmentVideo;
     private PagerAdapter pagerAdapter;
 
 
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             chat = findViewById(R.id.tabChat);
-            video = findViewById(R.id.tabVideo);
             audio = findViewById(R.id.tabAudio);
             tabLayout = findViewById(R.id.tabLayout);
             viewPager = findViewById(R.id.viewPager);
@@ -64,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
                                 tab.setText("Chat");
                                 break;
                             case 1:
-                                tab.setText("Video");
-                                break;
-                            case 2:
                                 tab.setText("Audio");
                                 break;
                         }

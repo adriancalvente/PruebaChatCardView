@@ -10,7 +10,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.herprogramacion.Viber.fragments.Audio;
 import com.herprogramacion.Viber.fragments.Chat;
-import com.herprogramacion.Viber.fragments.Video;
 
 public class PagerAdapter extends FragmentStateAdapter {
 
@@ -35,8 +34,6 @@ public class PagerAdapter extends FragmentStateAdapter {
                 case 0:
                     return new Chat();
                 case 1:
-                    return new Video();
-                case 2:
                     return new Audio();
                 default:
                     return null;

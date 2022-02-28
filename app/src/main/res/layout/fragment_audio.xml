@@ -13,61 +13,54 @@
         android:layout_width="373dp"
         android:layout_height="235dp"
         android:visibility="invisible"
-        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.chibde.visualizer.BarVisualizer
-        android:id = "@+id/visualizerBar"
+        android:id="@+id/visualizerBar"
         android:layout_width="373dp"
         android:layout_height="235dp"
         android:visibility="invisible"
-        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.chibde.visualizer.CircleBarVisualizer
         android:id="@+id/visualizerCircleBar"
         android:layout_width="373dp"
         android:layout_height="235dp"
-        android:layout_marginTop="40dp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.chibde.visualizer.CircleVisualizer
         android:id="@+id/visualizerCircle"
         android:layout_width="373dp"
         android:layout_height="235dp"
-        android:layout_marginTop="40dp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/visualizerSquareBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.chibde.visualizer.SquareBarVisualizer
         android:id="@+id/visualizerSquareBar"
         android:layout_width="373dp"
         android:layout_height="235dp"
         android:visibility="invisible"
-        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.chibde.visualizer.LineBarVisualizer
         android:id="@+id/visualizerLineBar"
         android:layout_width="373dp"
         android:layout_height="235dp"
         android:visibility="invisible"
-        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cambioEspectro"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/play"
@@ -76,12 +69,12 @@
         android:background="@drawable/reproducir"
         android:onClick="onClick"
         app:backgroundTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/visualizerLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
-        app:layout_constraintVertical_bias="0.339"
+        app:layout_constraintTop_toBottomOf="@+id/barraMusica"
+        app:layout_constraintVertical_bias="0.263"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <Button
@@ -90,25 +83,26 @@
         android:layout_height="58dp"
         android:background="@drawable/no_repetir"
         app:backgroundTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/visualizerLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.74"
+        app:layout_constraintHorizontal_bias="0.731"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
-        app:layout_constraintVertical_bias="0.339"
+        app:layout_constraintTop_toBottomOf="@+id/barraMusica"
+        app:layout_constraintVertical_bias="0.263"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
     <Button
         android:id="@+id/anterior"
         android:layout_width="64dp"
         android:layout_height="58dp"
         android:background="@drawable/anterior"
         app:backgroundTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cambioEspectro"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
-        app:layout_constraintVertical_bias="0.338"
+        app:layout_constraintTop_toBottomOf="@+id/barraMusica"
+        app:layout_constraintVertical_bias="0.31"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <Button
@@ -117,12 +111,12 @@
         android:layout_height="58dp"
         android:background="@drawable/siguiente"
         app:backgroundTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/visualizerLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintHorizontal_bias="0.944"
         app:layout_constraintStart_toStartOf="@+id/anterior"
-        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
-        app:layout_constraintVertical_bias="0.338"
+        app:layout_constraintTop_toBottomOf="@+id/barraMusica"
+        app:layout_constraintVertical_bias="0.263"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <Button
@@ -131,67 +125,79 @@
         android:layout_height="58dp"
         android:background="@drawable/detener"
         app:backgroundTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/visualizerLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintHorizontal_bias="0.226"
         app:layout_constraintStart_toStartOf="@+id/anterior"
-        app:layout_constraintTop_toBottomOf="@+id/visualizerLine"
-        app:layout_constraintVertical_bias="0.339"
+        app:layout_constraintTop_toBottomOf="@+id/barraMusica"
+        app:layout_constraintVertical_bias="0.263"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/cambioEspectro"
         android:layout_width="370dp"
         android:layout_height="244dp"
-        android:layout_marginTop="40dp"
         android:alpha="0"
         android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.463"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <SeekBar
         android:id="@+id/barraMusica"
         android:layout_width="307dp"
         android:layout_height="22dp"
+        android:layout_marginTop="80dp"
         android:backgroundTint="#F6F3F3"
         android:progressBackgroundTint="#FAF8F8"
-        app:layout_constraintBottom_toTopOf="@+id/play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visualizerLine" />
+        app:layout_constraintTop_toBottomOf="@+id/imagenMusica" />
 
     <TextView
         android:id="@+id/cambioTiempo"
         android:layout_width="45dp"
         android:layout_height="22dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="80dp"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/anterior"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cambioEspectro"
-        app:layout_constraintVertical_bias="0.461" />
+        app:layout_constraintTop_toBottomOf="@+id/imagenMusica"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/TotalCancion"
         android:layout_width="49dp"
         android:layout_height="21dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="3dp"
         android:textColor="#F3F3F3"
         app:layout_constraintBottom_toTopOf="@+id/siguiente"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/barraMusica"
-        app:layout_constraintTop_toBottomOf="@+id/visualizerLine" />
+        app:layout_constraintTop_toBottomOf="@+id/imagenMusica"
+        app:layout_constraintVertical_bias="0.041" />
 
-    <Button
-        android:id="@+id/btnReproductorInterno"
-        android:layout_width="57dp"
-        android:layout_height="56dp"
-        android:background="@drawable/altavoces"
-        app:backgroundTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/imagenMusica"
+        android:layout_width="280dp"
+        android:layout_height="207dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/color_gradient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/notaMusical"
+        android:layout_width="179dp"
+        android:layout_height="157dp"
+        android:src="@drawable/nota"
+        app:layout_constraintBottom_toTopOf="@+id/barraMusica"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.385" />
 </androidx.constraintlayout.widget.ConstraintLayout>
